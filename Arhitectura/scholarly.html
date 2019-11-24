@@ -119,9 +119,13 @@
     </section>
     <section typeof="sa:API" id="API" role="doc-API">
         <h2>Modelarea datelor proprii</h2>
-        <p>
-
-        </p>
+        <p>Datele introduse de catre utilizator in formularele din aplicatie, vor fi transmise printr-un POST, catre server.</p>
+        <p>Acesta la va prelua si le va introduce in tabelele corespunzatoare: datele de inregistrare in tabela care contine informatii despre petrecaret sau organizator, codul petrecerii va fi verificat in tabela de petreceri, datele transmise la crearea unei petreceri, in tabela de petreceri etc.</p>
+        <p>De asemenea clientul va face GET-uri pentru a putea obtine informatiile necesare, astfel incat ca organizatorul sa fie informat despre: petrecerile pe care le are create sau la care a participat, clasamentul live al melodiilor etc.</p>
+        <p>Serverul de Node.js combinat cu framework-ul Express se va conecta cu baza de date MongoDB pentru a putea realiza aceste interactiuni.</p>
+        <p>Vom folosi API-ul oferit de Spotify pentru a avea la dispozitie toate melodiile si genurile muzicale pe care acesta le ofera. In momentul in care clientul alege un gen sau cauta o melodie, noi vom face un GET pe ruta de search oferita de Spotify si vom selecta informatii despre gen, melodie, artist, pe care le vom introduce in baza de date. De asemenea, tot prin Spotify vom reda si muzica de la petrecere.</p>
+        <p>Datele oferite de API-ul Gyroscope ne vor ajuta sa aflam daca petrecaretii danseaza sau nu pe o anumita melodie, iar in caz ca vor dansa, vom transmite catre baza de date prin server aceasta informatie. Astfel, printr-un algoritm, vom putea stabili urmatoarele 10 melodii care vor fi redate. Acestea se vor schimba de la o piesa la alta in functie de numarul persoanelor care danseaza.</p>
+        <p>Aplicatia va fi structurata intr-un MVC (model view controller), in care fisierul de modele va contine schemele bazei de date, cel de view partea de client, iar controllerele partea de server.</p>
     </section>
     <section>
         <h2>Stocare la nivel de client/server</h2>
