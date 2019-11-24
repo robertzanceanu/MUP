@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Music Party Chooser</title>
+</head>
+
+<body>
+    <h1>
+        Arhitectura Music Party Chooser
+    </h1>
+    <section typeof="sa:AuthorsList">
+        <h2>Autori</h2>
+        <ul>
+            <li typeof="sa:ContributorRole" property="schema:author">
+                <span typeof="schema:Person" resource="https://en.wikipedia.org/wiki/John_Henry_Holland">
+                    <meta property="schema:givenName" content="Andra">
+                    <meta property="schema:additionalName" content="Delia">
+                    <meta property="schema:familyName" content="Tampu">
+                    <span property="schema:name">Andra-Delia Tampu</span>
+                </span>
+                <ul>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="mailto:tampu.andra@yahoo.ro" property="schema:email">tampu.andra@yahoo.ro</a>
+                    </li>
+                </ul>
+            </li>
+            <li typeof="sa:ContributorRole" property="schema:author">
+                <span typeof="schema:Person" resource="https://en.wikipedia.org/wiki/John_Henry_Holland">
+                    <meta property="schema:givenName" content="Robert">
+                    <meta property="schema:additionalName" content="Ioan">
+                    <meta property="schema:familyName" content="Zanceanu">
+                    <span property="schema:name">Robert Ioan Zanceanu</span>
+                </span>
+                <ul>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="mailto:robertzanceanu@gmail.com" property="schema:email">robertzanceanu@gmail.com</a>
+                    </li>
+                </ul>
+            </li>
+            <li typeof="sa:ContributorRole" property="schema:author">
+                <span typeof="schema:Person" resource="https://en.wikipedia.org/wiki/John_Henry_Holland">
+                    <meta property="schema:givenName" content="Andrei">
+                    <meta property="schema:familyName" content="Calinciuc">
+                    <span property="schema:name">Andrei Calinciuc</span>
+                </span>
+                <ul>
+                    <li property="schema:roleContactPoint" typeof="schema:ContactPoint">
+                        <a href="mailto:scoala.andrei@yahoo.com" property="schema:email">scoala.andrei@yahoo.com</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </section>
+    <section typeof="sa:Etape" id="etape" role="doc-Etape">
+        <h2>Etapele principale ale dezvoltarii proiectului</h2>
+        <ul>
+            Dezvoltarea proiectului consta din urmatoarele etape:
+            <li>
+                Crearea unei baze de date in conformitate cu cerintele proiectului
+            </li>
+            <li>
+                Crearea unui server de Node.js
+            </li>
+            <li>
+                Implementarea unei interfete Web "user-friendly"
+            </li>
+            <li>
+                Interconectarea server-ului cu interfata
+            </li>
+            <li>
+                Conectarea server-ului cu baza de date
+            </li>
+            <li>
+                Conectarea server-ului cu API-urile necesare(Spotify si Gyroscope)
+            </li>
+            <li>
+                Implementarea cerintelor
+            </li>
+            <li>
+                Testarea aplicatiei
+            </li>
+        </ul>
+
+    </section>
+    <section typeof="sa:interactiune" id="interactiune" role="doc-Interactiune">
+        <h2>
+            Maniera de interactiune cu utilizatorul
+        </h2>
+        <ul>
+            Aplicatia va contine doua sisteme de autentificare si inregistrare, unul pentru "petrecareti" si altul pentru organizatorii de petreceri.
+            Dupa autentificare/inregistrare, urmeaza un set de interactiuni ale utilizatorilor:
+            <li>
+                <h3>Petrecareti:</h3> 
+                <p>
+                    Vor fi redirectionati catre o pagina in care li se va cere un cod unic de petrecere.
+                    Acest cod va stabili accesul utilizatorului la detaliile privind muzica petrecerii.
+                    Dupa introducerea codului, utilizatorul va fi redirectionat catre un formular in care va trebui sa completeze preferintele in materie de muzica(genul, artistul, piesele muzicale).
+                    Imediat dupa submisia formularului, incepe monitorizarea miscarilor petrecaretului.
+                </p>
+            </li>
+            <li>
+                <h3>Organizatorii:</h3>
+                <p>
+                    Acestia vor fi redirectionati catre o pagina care contine toate petrecerile organizate de catre acestia in trecut.
+                    Pagina va contine si optiunea de adaugare a unei petreceri care trimite catre un formular. Acesta va contine detalii despre petrecerea organizata precum nume, locatie, data petrecerii.
+                    Dupa adaugarea unei petreceri se va genera codul unic al petrecerii care va putea fi oferit mai tarziu petrecaretilor.
+                    Cand petrecerea are loc, organizatorul poate accesa playlist-ul generat automat in urma alegerilor facute de catre petrecareti si poate da play acestuia.
+                    De asemenea, organizatorul poate incheia petrecerea.
+                </p>
+            </li>
+        </ul>
+    </section>
+    <section typeof="sa:management" id="management" role="doc-management">
+        <h2>Management-ul codului-sursa</h2>
+        <p>Codul-sursa va fi stocat pe platforma Github, la link-ul <a href="https://github.com/robertzanceanu/MUP">https://github.com/robertzanceanu/MUP</a>. Imediat dupa incheierea unui task, fiecare contribuitor al proiectului va face commit la ceea ce a lucrat.</p>
+    </section>
+    <section typeof="sa:API" id="API" role="doc-API">
+        <h2>Modelarea datelor proprii</h2>
+        <p>
+            
+        </p>
+    </section>
+    <section>
+        <h2>Stocare la nivel de client/server</h2>
+        <p>
+            Solutia de stocare aleasa pentru acest proiect este MongoDB datorita usurintei de folosire a acestuia si a complementarii cu Node.js. 
+            Pe adresa de Github mentionata mai sus se poate gasi o diagrama UML reprezentand schema bazei de date a proiectului.
+        </p>
+    </section>
+</body>
+
+</html>
