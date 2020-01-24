@@ -1,5 +1,5 @@
-import Login from './pages/login'
-import Home from './pages/home'
+import Login from './pages/login/login'
+import Home from './pages/home/home'
 
 import ParseRequestUrl from './shared-functions/utils'
 
