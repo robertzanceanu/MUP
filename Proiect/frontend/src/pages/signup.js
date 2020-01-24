@@ -35,7 +35,7 @@ let Signup = {
                         </div>
                         <div class="field">
                             <label class="label" for="select_role_signup">Selectati rolul dumneavoastra:</label>
-                            <select class="select">
+                            <select class="select" id="role_signup">
                                 <option value="petrecaret">Petrecaret</option>
                                 <option value="organizator">Organizator de petrecere</option>
                             </select>
@@ -55,11 +55,19 @@ let Signup = {
         document.getElementById('submit-button').addEventListener('click', async () => {
             console.log('aici')
             let formValues={}
-            let email = document.getElementById('email_login')
-            let password = document.getElementById('password_login')
+            let email = document.getElementById('email_signup')
+            let password = document.getElementById('password_signup')
+            let confirm_password= document.getElementById('confirm_password_signup')
+            let lastname= document.getElementById('nume_signup')
+            let firstname= document.getElementById('prenume_signup')
+            let role=document.getElementById('role_signup')
             formValues = {
                 email:email.value,
-                password:password.value
+                password:password.value,
+                confirm_password:confirm_password.value,
+                lastname:lastname.value,
+                firstname:firstname.value,
+                role:role.value
             }
             await onSubmit(formValues)
         })
