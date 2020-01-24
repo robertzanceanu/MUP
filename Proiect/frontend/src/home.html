@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 
-    <head id="head">
+    <head>
         <title>MUP- Music party chooser</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <meta http-equiv="Content-Security-Policy"
-            content="font-src 'self' data:; img-src 'self' data:; default-src 'self' http://121.0.0:8080/">
         <link rel="stylesheet" href="style.css">
 
     </head>
@@ -22,13 +20,15 @@
 
         <div class="line"></div>
         <div class="wrap">
-            <button type="button" class="add-party" id="formButton">Creeaza o noua petrecere/ Intra la
+            <button type="button" class="open-button" onclick='openForm()'>Creeaza o noua petrecere/ Intra la
                 petrecere</button>
-
-
         </div>
-        
-        <button class="open-button" onclick="openForm()">Open Form</button>
+        <div class="block-party">
+            <div class="party">1</div>
+            <div class="party">2</div>
+            <div class="party">3</div>
+            <div class="party">4</div>
+        </div>
 
         <div class="form-popup" id="myForm">
             <form action="/action_page.php" class="form-container">
@@ -44,24 +44,14 @@
                 <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
             </form>
         </div>
-
-        <div class="block-party">
-            <div class="party">1</div>
-            <div class="party">2</div>
-            <div class="party">3</div>
-            <div class="party">4</div>
-        </div>
         <script>
             function openForm() {
                 document.getElementById("myForm").style.display = "block";
             }
-
             function closeForm() {
                 document.getElementById("myForm").style.display = "none";
             }
         </script>
-
     </body>
-
 
 </html>
