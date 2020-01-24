@@ -83,3 +83,49 @@ html,body {
     font-weight: bold;
     width: 100%;
 }
+
+.block-user-actions{
+    width: 30%;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+}
+.button-div{
+    margin-right: 20px;
+    margin-left: 10px;
+    background: white;
+    border-radius: 8px;
+    height: 30px;
+    padding: 10px 3px 3px 3px;
+    border: 2px solid darkgrey;
+    text-align: center;
+    margin-top: 30px;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+
+.login-logo{
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.logo{
+    width: 70%;
+    height: 500px;
+    background-image: url("./assets/logo.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-x: center;
+    background-position-y: top;
+}
