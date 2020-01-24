@@ -16,6 +16,7 @@ const router = async () => {
     
     const content = null || document.getElementById('main')
     content.innerHTML = await page.render()
+    console.log('aici2')
     await page.after_render()
 }
 
