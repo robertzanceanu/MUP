@@ -1,10 +1,12 @@
 import Login from './pages/login'
 import Home from './pages/home'
+import Signup from './pages/signup'
 
 import ParseRequestUrl from './shared-functions/utils'
 
 const routes = {
     '/login':Login,
+    '/signup':Signup,
     '/':Home,
 }
 
