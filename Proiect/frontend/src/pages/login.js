@@ -17,11 +17,12 @@ import errorHandel  from '../shared/card_error'
         errorHandel(response.status);
         
         const json = await response.json()
+        console.log('ggggg',json)
         localStorage.setItem('auth-token',json.token)
         localStorage.setItem('id',json.id)
         localStorage.setItem('name',json.name)
         localStorage.setItem('role',json.role)
-        window.location.pathname='/home'
+        // window.location.pathname='/home'
         return json
     } catch(err) {
         // errorHandel(response.err);
