@@ -1,5 +1,5 @@
 import { API_URL } from '../constants'
-
+import errorHandel  from '../shared/card_error'
  const onSubmit =  async (values) => {
     let data = {
              email:values.email,
@@ -14,6 +14,8 @@ import { API_URL } from '../constants'
             },
             body: JSON.stringify(data)
         })
+        errorHandel(response.status);
+        
         const json = await response.json()
         localStorage.setItem('auth-token',json.token)
         localStorage.setItem('id',json.id)
@@ -22,6 +24,8 @@ import { API_URL } from '../constants'
         window.location.pathname='/home'
         return json
     } catch(err) {
+        // errorHandel(response.err);
+
         console.log(err)
     }
 }
