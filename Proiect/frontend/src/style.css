@@ -139,6 +139,7 @@ a{
     background-size: contain;
     background-position-x: center;
     background-position-y: top;
+}
 .header {
     display: flex;
     justify-content: space-between;
