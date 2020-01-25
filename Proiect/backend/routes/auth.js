@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const User = require('../model/userModel')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const { registerValidation, loginValidation } = require('../validation')
 const jwt = require('jsonwebtoken')
 
@@ -66,7 +66,7 @@ router.post('/login', async (req,res) => {
     const validPass = await bcrypt.compare(req.body.password, user.password)
     if(!validPass) return res.status(400).send({
         error: {
-            message:'Invalid password',
+            message:'Parola gresita!',
             status:400
         }})
 
