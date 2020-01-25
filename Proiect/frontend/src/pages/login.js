@@ -1,6 +1,30 @@
-const onSubmit =  async (values) => {
-    console.log(values)
+import { API_URL } from '../constants'
+
+ const onSubmit =  async (values) => {
+     let data = {
+             email:values.email,
+             password: values.password
+     }
+    console.log(values, 'aici', data)
+    try {
+        const response = await fetch(`${API_URL}/user/login`, {
+            method:'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        const json = await response.json()
+        console.log('aaaaaa',json.token)
+        localStorage.setItem('auth-token',json.token)
+        window.location.pathname='/home'
+        return json
+    } catch(err) {
+        console.log(err)
+    }
 }
+
 let Login = {
     render: async() => {
         return `
