@@ -1,29 +1,32 @@
 import { API_URL } from '../constants'
-import errorHandel  from '../shared/card_error'
- const onSubmit =  async (values) => {
+import errorHandel from '../shared/card_error'
+const onSubmit = async (values) => {
     let data = {
-             email:values.email,
-             password: values.password
+        email: values.email,
+        password: values.password
     }
     try {
         const response = await fetch(`${API_URL}/user/login`, {
-            method:'post',
+            method: 'post',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         })
-        errorHandel(response.status);
-        
+        // errorHandel(response.status,response);
+
         const json = await response.json()
-        localStorage.setItem('auth-token',json.token)
-        localStorage.setItem('id',json.id)
-        localStorage.setItem('name',json.name)
-        localStorage.setItem('role',json.role)
-        window.location.pathname='/home'
+        if (json.error) {
+            errorHandel(json.error.status, json.error.message);
+        }
+        localStorage.setItem('auth-token', json.token)
+        localStorage.setItem('id', json.id)
+        localStorage.setItem('name', json.name)
+        localStorage.setItem('role', json.role)
+        // window.location.pathname='/home'
         return json
-    } catch(err) {
+    } catch (err) {
         // errorHandel(response.err);
 
         console.log(err)
@@ -31,9 +34,10 @@ import errorHandel  from '../shared/card_error'
 }
 
 let Login = {
-    render: async() => {
+    render: async () => {
         return `
-            <div class="page-wrapper">
+            
+            <div class="page-wrapper" id='page'>
                 <div class="login-page">
                     <div class="login-logo">
                         <h1 class="welcome">Bine ai venit!</h1>
@@ -64,14 +68,19 @@ let Login = {
     after_render: async () => {
         document.getElementById('submit-button').addEventListener('click', async () => {
             console.log('aici')
-            let formValues={}
+            let formValues = {}
             let email = document.getElementById('email_login')
             let password = document.getElementById('password_login')
             formValues = {
-                email:email.value,
-                password:password.value
+                email: email.value,
+                password: password.value
             }
-            await onSubmit(formValues)
+            let response = await onSubmit(formValues)
+            let node = document.createElement('div')
+            node.innerHTML = errorHandel(response.error.status, response.error.message)
+            document.getElementById('page').appendChild(node)
+            setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
+
         })
     }
 }
