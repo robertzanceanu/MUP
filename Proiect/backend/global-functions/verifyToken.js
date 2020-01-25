@@ -15,7 +15,8 @@ function verified(req,res,next) {
     } catch(err) {
         res.status(401).send({
             error: {
-                message:'Invalid token'
+                message:'Invalid token',
+                status:401
             }
         }
         )
