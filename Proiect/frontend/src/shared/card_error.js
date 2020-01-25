@@ -1,4 +1,4 @@
-function errorHandel(code, err) {
+function showError(code, err) {
     console.log(code)
     return `
     <div class="errorCard" id='errorCard'>
@@ -9,4 +9,4 @@ function errorHandel(code, err) {
 }
 
 
-export default errorHandel
+export default showError

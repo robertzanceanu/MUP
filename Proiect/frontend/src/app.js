@@ -13,8 +13,7 @@ const routes = {
     '/signup':Signup,
     '/firstpage':FirstPage,
     '/badrequest':BadRequest,
-    '/notfound':NotFound,
-    '/unauthorized':Unauthorized,
+    // '/unauthorized':Unauthorized,
     '/':Home,
     // '/':Home,
     '/home':Home
@@ -25,11 +24,11 @@ const router = async () => {
     let request = ParseRequestUrl()
     let parsedURL = (request.resource ? '/' + request.resource : '/') + (request.id ? '/:id' : '') + (request.verb ? '/' + request.verb : '')
 
-    let page = routes[parsedURL] ? routes[parsedURL] : 'error'
+    let page = routes[parsedURL] ? routes[parsedURL] : NotFound
     
     const content = null || document.getElementById('main')
     content.innerHTML = await page.render()
-    console.log('aici2')
+    console.log(content)
     await page.after_render()
 }
 
