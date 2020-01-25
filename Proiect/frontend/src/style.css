@@ -203,6 +203,7 @@ a {
 /* The popup form - hidden by default */
 
 .form-popup {
+    color: white;
     display: none;
     position: fixed;
     left: calc(-50vw + 50%);
@@ -211,17 +212,31 @@ a {
     margin-right: auto;
     bottom: 10%;
     top: 12.5%;
-    height: 45%;
+    height: 55%;
     width: 45%;
     z-index: 9;
+    background-color: rgb(0, 0, 0);
+    }
+
+.container-opp{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    position: fixed;
+    top: 0;
+    z-index: 0;
+    display: none;
+
 }
 
 /* Add styles to the form container */
 
 .form-container {
     width: 100%;
+    height: 100%;
     padding: 10px;
-    background-color: white;
+    background-color: rgba(15, 15, 15, 0.2);
+    box-shadow: 0px 3px 3px 5px rgba(121, 119, 119, 0.17);
 }
 
 /* Full-width input fields */
@@ -244,12 +259,13 @@ a {
 /* Set a style for the submit/login button */
 
 .form-container .btn {
-    background-color: #4CAF50;
+    background-color: blue;
     color: white;
     padding: 16px 20px;
     border: none;
     cursor: pointer;
     width: 100%;
+    margin-top: 10px;
     margin-bottom: 10px;
     opacity: 0.8;
 }
@@ -257,6 +273,9 @@ a {
 /* Add a red background color to the cancel button */
 
 .form-container .cancel {
+    background-color: black;
+}
+.form-container .cancel:hover {
     background-color: red;
 }
 
@@ -266,6 +285,16 @@ a {
     opacity: 1;
 }
 
+input, label{
+    display:block;
+    padding-top: 5px;
+    padding-bottom: 7px;
+}
+
+.form-container.blur{
+    filter: 'blur(4px)';
+    -webkit-filter: 'blur(4px)';
+}
 .errorCard {
     display: flex;
     align-items: center;
