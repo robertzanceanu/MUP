@@ -14,10 +14,13 @@ import errorHandel  from '../shared/card_error'
             },
             body: JSON.stringify(data)
         })
-        errorHandel(response.status);
+        // errorHandel(response.status,response);
         
         const json = await response.json()
-        console.log('ggggg',json)
+        console.log(json)
+        if(json.error){
+            errorHandel(response.error.status,response.error.message);
+        }
         localStorage.setItem('auth-token',json.token)
         localStorage.setItem('id',json.id)
         localStorage.setItem('name',json.name)
@@ -34,6 +37,7 @@ import errorHandel  from '../shared/card_error'
 let Login = {
     render: async() => {
         return `
+            ${errorHandel()}
             <div class="page-wrapper">
                 <div class="login-page">
                     <div class="login-logo">
