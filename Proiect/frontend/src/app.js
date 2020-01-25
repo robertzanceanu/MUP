@@ -16,6 +16,9 @@ const routes = {
     '/notfound':NotFound,
     '/unauthorized':Unauthorized,
     '/':Home,
+    // '/':Home,
+    '/home':Home
+
 }
 
 const router = async () => {

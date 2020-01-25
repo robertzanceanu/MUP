@@ -1,70 +1,79 @@
-html,body {
-    width:100%;
-    height:100%;
-    margin:0;
-    padding:0;
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
     font-family: sans-serif;
+    background: #000000;
 }
+
 #main {
-    width:100%;
-    height:100%;
-    background:#222326;
+    width: 100%;
+    height: 100%;
     /* padding:20px; */
 }
+
 .page-wrapper {
-    width:100%;
-    padding:20px;
+    width: 100%;
+    padding: 20px;
     box-sizing: border-box;
 }
-.welcome {
-    color:white;
 
+.welcome {
+    color: white;
 }
+
 .login-page {
-    width:100%;
-    display:flex;
+    width: 100%;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .form-wrapper {
-    width:50%;
-    background:white;
-    border-radius:12px;
-    display:flex;
+    width: 50%;
+    background: white;
+    border-radius: 12px;
+    display: flex;
     flex-direction: column;
-    height:fit-content;
-    align-items:center; 
-    padding:20px 12px 20px 12px;
+    height: fit-content;
+    align-items: center;
+    padding: 20px 12px 20px 12px;
     box-sizing: border-box;
 }
+
 .field {
-    width:50%;
-    height:fit-content;
-    display:flex;
+    width: 50%;
+    height: fit-content;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 10px;
 }
-.form-title{
+
+.form-title {
     font-size: 20px;
-    color:#222326;
+    color: #222326;
     font-weight: bold;
     align-self: center;
 }
+
 .label {
     font-size: 14px;
     font-weight: bold;
-    color:#222326;
+    color: #222326;
     margin-bottom: 4px;
 }
+
 .input {
-    padding:3px 5px 3px 5px;
-    width:100%;
-    height:30px;
+    padding: 3px 5px 3px 5px;
+    width: 100%;
+    height: 30px;
     box-sizing: border-box;
     border-radius: 4px;
     border: 1px solid #D3D3D3;
 }
+
 .select {
     padding:3px 5px 3px 5px;
     width:100%;
@@ -73,9 +82,10 @@ html,body {
     border-radius: 4px;
     border: 1px solid #D3D3D3;
 }
-.submit-button{
+.submit-button {
+
     background: #005599;
-    border:none;
+    border: none;
     height: 30px;
     border-radius: 8px;
     color: white;
@@ -83,6 +93,7 @@ html,body {
     font-weight: bold;
     width: 100%;
 }
+
 
 .block-user-actions{
     width: 30%;
@@ -128,4 +139,128 @@ a{
     background-size: contain;
     background-position-x: center;
     background-position-y: top;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .text {
+    color: aliceblue;
+    margin-right: 5%;
+}
+
+.line {
+    height: 3px;
+    width: 100%;
+    background-color: grey;
+    border-radius: 12;
+}
+
+.block-party {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.party {
+    border: lightsteelblue 2px solid;
+    width: 85%;
+    height: 20%;
+    margin-top: 1%;
+    background-color: whitesmoke;
+}
+
+.wrap {
+    display: flex;
+    justify-content: flex-end;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+
+.open-button {
+    padding: 5px 5px 5px 5px;
+    display: block;
+    border: none;
+    background-color: #222326;
+    color: white;
+    text-align: right;
+    margin-right: 5%;
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+/* The popup form - hidden by default */
+
+.form-popup {
+    display: none;
+    position: fixed;
+    left: calc(-50vw + 50%);
+    right: calc(-50vw + 50%);
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 10%;
+    top: 12.5%;
+    height: 45%;
+    width: 45%;
+    z-index: 9;
+}
+
+/* Add styles to the form container */
+
+.form-container {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+}
+
+/* Full-width input fields */
+
+.form-container input[type=text], .form-container input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for the submit/login button */
+
+.form-container .btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+
+.form-container .cancel {
+    background-color: red;
+}
+
+/* Add some hover effects to buttons */
+
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
 }
