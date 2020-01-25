@@ -27,7 +27,7 @@ let Home = {
 
     <div class="line"></div>
     <div class="wrap">
-        <button type="button" class="open-button" onclick='openForm()'>Creeaza o noua petrecere/ Intra la
+        <button type="button" class="open-button" id="openForm">Creeaza o noua petrecere/ Intra la
             petrecere</button>
     </div>
     <div class="block-party">
@@ -48,7 +48,7 @@ let Home = {
             <input type="password" placeholder="Enter Password" name="psw" required>
 
             <button type="submit" class="btn">Login</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            <button type="button" class="btn cancel" id="closeForm">Close</button>
         </form>
     </div>
             
@@ -56,12 +56,19 @@ let Home = {
     },
     after_render: async () => {
 
-        function openForm() {
+        // function openForm() {
+        //     document.getElementById("myForm").style.display = "block";
+        // }
+        // function closeForm() {
+        //     document.getElementById("myForm").style.display = "none";
+        // }
+
+        document.getElementById('openForm').addEventListener('click', () => {
             document.getElementById("myForm").style.display = "block";
-        }
-        function closeForm() {
+        })
+        document.getElementById('closeForm').addEventListener('click', () => {
             document.getElementById("myForm").style.display = "none";
-        }
+        })
     }
 }
 
