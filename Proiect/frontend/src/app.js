@@ -3,7 +3,7 @@ import Home from './pages/home'
 import Signup from './pages/signup'
 import FirstPage from './pages/firstpage'
 
-import ParseRequestUrl from './shared-functions/utils'
+import ParseRequestUrl from './shared/utils'
 
 const routes = {
     '/login':Login,
