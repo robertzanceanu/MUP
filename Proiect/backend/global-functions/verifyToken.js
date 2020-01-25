@@ -8,7 +8,12 @@ function verified(req,res,next) {
         req.user = verified
         next()
     } catch(err) {
-        res.status(400).send('Invalid token')
+        res.status(401).send({
+            error: {
+                message:'Invalid token'
+            }
+        }
+        )
     }
 }
 module.exports = verified

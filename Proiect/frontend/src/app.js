@@ -5,7 +5,8 @@ import ParseRequestUrl from './shared-functions/utils'
 
 const routes = {
     '/login':Login,
-    '/':Home,
+    // '/':Home,
+    '/home':Home
 }
 
 const router = async () => {
