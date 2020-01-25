@@ -1,4 +1,5 @@
 import {API_URL} from '../constants'
+import errorHandel from '../shared/card_error'
 
 const onSubmit =  async (values) => {
     console.log(values)
@@ -12,7 +13,7 @@ const onSubmit =  async (values) => {
             body: JSON.stringify(values)
         })
         const json = await response.json()
-        window.location.pathname='/login'
+        // window.location.pathname='/login'
         return json
     }
     catch(err) {
@@ -22,7 +23,7 @@ const onSubmit =  async (values) => {
 let Signup = {
     render: async() => {
         return `
-            <div class="page-wrapper">
+            <div class="page-wrapper" id='page'>
                 <div class="login-page">
                     <div class="login-logo">
                         <h1 class="welcome">Bine ai venit!</h1>
@@ -87,7 +88,12 @@ let Signup = {
                 firstName:firstname.value,
                 role:role.value
             }
-            await onSubmit(formValues)
+            let response = await onSubmit(formValues)
+            let node = document.createElement('div')
+            node.innerHTML = errorHandel(response.error.status, response.error.message)
+            document.getElementById('page').appendChild(node)
+            setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
+
         })
     }
 }
