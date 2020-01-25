@@ -6,7 +6,7 @@ import BadRequest from './pages/badrequest400'
 import NotFound from './pages/notfound404'
 import Unauthorized from './pages/unauthorized401'
 
-import ParseRequestUrl from './shared-functions/utils'
+import ParseRequestUrl from './shared/utils'
 
 const routes = {
     '/login':Login,

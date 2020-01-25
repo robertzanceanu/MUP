@@ -1,11 +1,10 @@
 import { API_URL } from '../constants'
-
+import errorHandel  from '../shared/card_error'
  const onSubmit =  async (values) => {
-     let data = {
+    let data = {
              email:values.email,
              password: values.password
-     }
-    console.log(values, 'aici', data)
+    }
     try {
         const response = await fetch(`${API_URL}/user/login`, {
             method:'post',
@@ -15,12 +14,18 @@ import { API_URL } from '../constants'
             },
             body: JSON.stringify(data)
         })
+        errorHandel(response.status);
+        
         const json = await response.json()
-        console.log('aaaaaa',json.token)
         localStorage.setItem('auth-token',json.token)
+        localStorage.setItem('id',json.id)
+        localStorage.setItem('name',json.name)
+        localStorage.setItem('role',json.role)
         window.location.pathname='/home'
         return json
     } catch(err) {
+        // errorHandel(response.err);
+
         console.log(err)
     }
 }
