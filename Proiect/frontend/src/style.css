@@ -267,14 +267,40 @@ a {
 }
 
 .errorCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     z-index: 10;
-    width: 100px;
-    height: auto;
-    background-color: crimson;
+    padding: 5px 10px 5px 10px;
+    background-color: rgb(209, 109, 126);
     text-align: left;
+    border-radius: 6px;
     position: fixed;
-    right: 0px;
-    top: 0px;
-    border-radius: 5px;
-    text-align: center;
+    -webkit-animation-name: errCard;
+    -webkit-animation-duration: 3s;
+    animation-name: errCard;
+    animation-duration: 3s;
+    color:white;
+    font-weight: 500;
+    
+}
+
+@keyframes errCard {
+    0% {
+        right: -100px;
+        top: 0px;
+    }
+  
+    50% {
+        right: 12px;
+        top: 0px;
+    }
+    75% {
+        right: 7px;
+        top: 0px;
+    }
+    100% {
+        right: -150px;
+        top: 0px;
+    }
 }
