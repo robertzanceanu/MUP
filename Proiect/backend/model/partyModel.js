@@ -13,14 +13,18 @@ const partySchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    start: {
-        type:Date,
+    duration: {
+        type:String,
         required: true
     },
-    end: {
-        type:Date,
-        required:true
+    name: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true
     }
 })
 
-module.exports = mongoose.model('Parties', partySchema)
+module.exports = mongoose.model('Party', partySchema)

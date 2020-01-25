@@ -18,13 +18,11 @@ const loginValidation = (data) => {
     return Joi.validate(data,schema)
 }
 
-const addPartyValidation = (date) => {
+const addPartyValidation = (data) => {
     const schema = {
         creatorId:Joi.string().required(),
-        status:Joi.string().required(),
-        partyCode:Joi.string().required(),
-        start:Joi.date().required(),
-        end: Joi.date().required()
+        duration:Joi.string().required(),
+        name:Joi.string().required(),
     }
     return Joi.validate(data,schema)
 }
