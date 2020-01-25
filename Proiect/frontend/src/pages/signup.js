@@ -1,5 +1,23 @@
+import {API_URL} from '../constants'
+
 const onSubmit =  async (values) => {
     console.log(values)
+    try {
+        const response = await fetch(`${API_URL}/user/register`, {
+            method:'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(values)
+        })
+        const json = await response.json()
+        window.location.pathname='/login'
+        return json
+    }
+    catch(err) {
+        console.log(err)
+    }
 }
 let Signup = {
     render: async() => {
@@ -19,11 +37,11 @@ let Signup = {
                         </div>
                         <div class="field">
                             <label class="label" for="nume_signup">Nume:</label>
-                            <input class="input" id="nume_signup" type="password" placeholder="Nume">
+                            <input class="input" id="nume_signup" type="text" placeholder="Nume">
                         </div>
                         <div class="field">
                             <label class="label" for="prenume_signup">Prenume:</label>
-                            <input class="input" id="prenume_signup" type="password" placeholder="Prenume">
+                            <input class="input" id="prenume_signup" type="text" placeholder="Prenume">
                         </div>
                         <div class="field">
                             <label class="label" for="password_signup">Parola:</label>
@@ -36,8 +54,8 @@ let Signup = {
                         <div class="field">
                             <label class="label" for="select_role_signup">Selectati rolul dumneavoastra:</label>
                             <select class="select" id="role_signup">
-                                <option value="petrecaret">Petrecaret</option>
-                                <option value="organizator">Organizator de petrecere</option>
+                                <option value="partyOrganizer">Organizator de petrecere</option>
+                                <option value="user">Petrecaret</option>
                             </select>
                         </div>
                         <div class="field">
@@ -65,8 +83,8 @@ let Signup = {
                 email:email.value,
                 password:password.value,
                 confirm_password:confirm_password.value,
-                lastname:lastname.value,
-                firstname:firstname.value,
+                lastName:lastname.value,
+                firstName:firstname.value,
                 role:role.value
             }
             await onSubmit(formValues)

@@ -2,6 +2,9 @@ import Login from './pages/login'
 import Home from './pages/home'
 import Signup from './pages/signup'
 import FirstPage from './pages/firstpage'
+import BadRequest from './pages/badrequest400'
+import NotFound from './pages/notfound404'
+import Unauthorized from './pages/unauthorized401'
 
 import ParseRequestUrl from './shared/utils'
 
@@ -9,6 +12,9 @@ const routes = {
     '/login':Login,
     '/signup':Signup,
     '/firstpage':FirstPage,
+    '/badrequest':BadRequest,
+    '/notfound':NotFound,
+    '/unauthorized':Unauthorized,
     '/':Home,
     // '/':Home,
     '/home':Home
