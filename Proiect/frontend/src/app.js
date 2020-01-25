@@ -1,12 +1,18 @@
 import Login from './pages/login'
 import Home from './pages/home'
+import Signup from './pages/signup'
+import FirstPage from './pages/firstpage'
 
 import ParseRequestUrl from './shared/utils'
 
 const routes = {
     '/login':Login,
+    '/signup':Signup,
+    '/firstpage':FirstPage,
+    '/':Home,
     // '/':Home,
     '/home':Home
+
 }
 
 const router = async () => {
