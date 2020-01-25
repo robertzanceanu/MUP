@@ -1,4 +1,5 @@
 import {API_URL} from '../constants'
+import { USER_DETAILS } from '../shared/user'
 
 const getPost = async () => {
     try {
@@ -19,6 +20,7 @@ const getPost = async () => {
 let Home = {
     render: async() => {
         getPost()
+        let user = {...USER_DETAILS}
         return `
         <header class="header">
         <img src="src/assets/images/logo.png" width="100px" height="100px">

@@ -1,7 +1,7 @@
 import Login from './pages/login'
 import Home from './pages/home'
 
-import ParseRequestUrl from './shared-functions/utils'
+import ParseRequestUrl from './shared/utils'
 
 const routes = {
     '/login':Login,
