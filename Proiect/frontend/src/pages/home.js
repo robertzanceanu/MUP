@@ -1,26 +1,26 @@
-import {API_URL} from '../constants'
+import { API_URL } from '../constants'
 import { USER_DETAILS } from '../shared/user'
 
 const getPost = async () => {
     try {
         const response = await fetch(`${API_URL}/posts`, {
-            method:'get',
+            method: 'get',
             headers: {
                 'Accept': 'application/json',
-                'auth-token':`${localStorage.getItem('auth-token')}`,
+                'auth-token': `${localStorage.getItem('auth-token')}`,
                 'Content-Type': 'application/json'
             }
         })
         const json = await response.json()
         return json
-    } catch(err) {
+    } catch (err) {
         console.log(err)
     }
-} 
+}
 let Home = {
-    render: async() => {
+    render: async () => {
         getPost()
-        let user = {...USER_DETAILS}
+        let user = { ...USER_DETAILS }
         return `
         <header class="header">
         <img src="./assets/images/logo.png" width="100px" height="100px">
@@ -39,21 +39,22 @@ let Home = {
         <div class="party">4</div>
     </div>
 
-    <div class="form-popup" id="myForm">
-        <form action="/action_page.php" class="form-container">
-            <h1>Login</h1>
+    <div class='container-opp' id='blurForm'>
+        <div class="form-popup" id="myForm">
+            <form action="/action_page.php" class="form-container">
+                <h1>Creeaza o petrecere:</h1>
 
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" required>
+                <label for="name"><b>Numele petrecerii:</b></label>
+                <input type="text" placeholder="Introduceti numele petrecerii" name="name" required>
 
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-
-            <button type="submit" class="btn">Login</button>
-            <button type="button" class="btn cancel" id="closeForm">Close</button>
-        </form>
-    </div>
+                <label for="startdate"><b>Durata petrecerii:</b></label>
+                <input type="number" step="0.1" placeholder="Durata" name="duration" id="duration" required>
             
+                <button type="submit" class="btn">Creeaza petrecerea!</button>
+                <button type="button" class="btn cancel" id="closeForm">Close</button>
+            </form>
+        </div>
+    </div> 
         `
     },
     after_render: async () => {
@@ -70,6 +71,12 @@ let Home = {
         })
         document.getElementById('closeForm').addEventListener('click', () => {
             document.getElementById("myForm").style.display = "none";
+        })
+        document.getElementById('openForm').addEventListener('click', () => {
+            document.getElementById("blurForm").style.display = "block";
+        })
+        document.getElementById('closeForm').addEventListener('click', () => {
+            document.getElementById("blurForm").style.display = "none";
         })
     }
 }
