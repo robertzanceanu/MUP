@@ -1,9 +1,31 @@
 import { API_URL } from '../constants'
 import { USER_DETAILS } from '../shared/user'
 import Unauthorized from './unauthorized401'
-const getPost = async () => {
+import addPartyForm from '../components/addPartyForm'
+import joinPartyForm from '../components/joinPartyForm'
+
+const submitCreateParty = async (data) => {
     try {
-        const response = await fetch(`${API_URL}/posts`, {
+        const response = await fetch(`${API_URL}/parties/addParty`, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'auth-token': `${localStorage.getItem('auth-token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        const json = await response.json()
+        return json
+    } catch(err) {
+        console.log(err)
+    }
+}
+const getParties = async () => {
+    let user = { ...USER_DETAILS }
+    try {
+        const response = await fetch(`${API_URL}/parties/getParties/${user.id}`, {
             method: 'get',
             headers: {
                 'Accept': 'application/json',
@@ -19,9 +41,8 @@ const getPost = async () => {
 }
 let Home = {
     render: async () => {
-        let response = await getPost()
+        let response = await getParties()
         let user = { ...USER_DETAILS }
-
         console.log(response)
         if (response.error) {
             if (response.error.status === 401) {
@@ -35,45 +56,55 @@ let Home = {
             </header>
             <div class="page-wrapper">
                 <div class="wrap">
-                    <button type="button" class="open-button" id="openForm">${user.role === 'partyOrganizer' ? 
-                        'Creeaza o noua petrecere' 
-                        : 
-                    'Intra la petrecere'}
+                    <button type="button" class="open-button" id="openForm">
+                        ${user.role === 'partyOrganizer' ? 
+                            'Creeaza o noua petrecere' 
+                            : 
+                            'Intra la petrecere'
+                        }
                     </button>
                 </div>
                 <div class="block-party">
-                    <div class="party">1</div>
-                    <div class="party">2</div>
-                    <div class="party">3</div>
-                    <div class="party">4</div>
+                        ${response.parties.map((party,index) => {
+                            return `
+                            <a href="/party/${party._id}">
+                            <div class="party">
+                                <h1 class="partyName">${party.name}</h1>
+                                <div class="partyFlex">
+                                    <div class="partyLabel">Status:</div>
+                                    ${
+                                        party.status === 'live' ?
+                                        `<div class="partyLive">Live</div>`
+                                        :
+                                            party.status === 'open' ?
+                                            `<div class="partyOpen">In asteptare</div>`
+                                            : 
+                                            `<div class="partyLive">In asteptare</div>`
+                                    }
+                                </div>
+                                <div class="partyFlex">
+                                    <div class="partyLabel">Codul petrecerii:</div>
+                                    <div class="partyCode">${party.partyCode}</div>
+                                </div>
+                            </div>
+                            </a>
+                            
+                            `
+                        }
+                        )}
                 </div>
             </div>
             <div class='container-opp' id='blurForm'>
-                <div class="form-popup" id="myForm">
-                    <form class="form-container">
-                        <h1>Creeaza o petrecere:</h1>
-    
-                        <label for="name" class="labelWhite">Numele petrecerii:</label>
-                        <input class="input" type="text" placeholder="Introduceti numele petrecerii" name="name" required>
-    
-                        <label for="startdate" class="labelWhite"><b>Durata petrecerii:</b></label>
-                        <input class="input" type="number" step="0.1" placeholder="Durata" name="duration" id="duration" required>
-                
-                        <button type="submit" class="btn">Creeaza petrecerea!</button>
-                        <button type="button" class="btn cancel" id="closeForm">Close</button>
-                    </form>
-                </div>
+                ${
+                    user.role === 'partyOrganizer' ?
+                    await addPartyForm.render()
+                    :
+                    await joinPartyForm.render()
+                }
             </div> 
             `
     },
     after_render: async () => {
-
-        // function openForm() {
-        //     document.getElementById("myForm").style.display = "block";
-        // }
-        // function closeForm() {
-        //     document.getElementById("myForm").style.display = "none";
-        // }
         document.getElementById('openForm').addEventListener('click', () => {
             document.getElementById("myForm").style.display = "block";
         })
@@ -86,7 +117,20 @@ let Home = {
         document.getElementById('closeForm').addEventListener('click', () => {
             document.getElementById("blurForm").style.display = "none";
         })
-
+        document.getElementById('submitCreatePartyForm').addEventListener('click', async(e) => {
+            console.log('a intart')
+            e.preventDefault()
+            let user = { ...USER_DETAILS }
+            let name = document.getElementById('partyName')
+            let duration = document.getElementById('partyDuration') 
+            let formValues = {
+                name: name.value,
+                duration: duration.value,
+                creatorId: user.id
+            }
+            console.log(formValues)
+            const response = await submitCreateParty(formValues)
+        })
     }
 }
 

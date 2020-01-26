@@ -15,7 +15,7 @@ html, body {
 
 .page-wrapper {
     width: 100%;
-    padding: 20px 15px 10px 15px;
+    padding: 20px 40px 10px 40px;
     box-sizing: border-box;
 }
 
@@ -170,17 +170,53 @@ a {
 .block-party {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .party {
-    border: lightsteelblue 2px solid;
-    width: 85%;
-    height: 20%;
-    margin-top: 1%;
-    background-color: whitesmoke;
+    width: 340px;
+    background-color: white;
+    border-radius: 8px;
+    height: fit-content;
+    padding:10px 15px;
+    color:black;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
 }
-
+.party:hover{
+    transform: scale(1.1);
+}
+.partyName {
+    font-size:20px;
+    margin-bottom:5px;
+    font-weight: bold;
+}
+.partyFlex {
+    display:flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.partyLabel {
+    font-size: 16px;
+}
+.partyLive {
+    color:green;
+    font-size:18px;
+    font-weight: bold;
+}
+.partyOpen {
+    color:grey;
+    font-size:18px;
+    font-weight: bold;
+}
+.partyCode{
+    font-size:18px;
+    font-weight: bold;
+}
 .wrap {
     display: flex;
     justify-content: flex-end;

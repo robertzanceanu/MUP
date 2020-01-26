@@ -6,7 +6,7 @@
   "scripts": {
     "webpack": "webpack",
     "webpack-dev-server": "webpack-dev-server",
-    "dev": "npm run webpack-dev-server -- --env.mode development",
+    "dev": "npm run webpack-dev-server --open --history-api-fallback -- --env.mode development",
     "prod": "rm -rf dist/ && npm run webpack -- --env.mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
