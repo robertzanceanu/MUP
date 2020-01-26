@@ -60,7 +60,6 @@ let Login = {
     },
     after_render: async () => {
         document.getElementById('submit-button').addEventListener('click', async () => {
-            console.log('aici')
             let formValues = {}
             let email = document.getElementById('email_login')
             let password = document.getElementById('password_login')

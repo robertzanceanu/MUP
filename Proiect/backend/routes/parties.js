@@ -6,6 +6,28 @@ const Party = require('../model/partyModel')
 const OpenParties = require('../model/openPartyModel')
 const User = require('../model/userModel')
 
+router.get('/getParties/:id', verify, async(req,res) => {
+    console.log('a intrat')
+    try {
+        const user = await User.findOne({_id:req.params.id})
+        console.log('a intrat1', user)
+        if(user.role === 'partyOrganizer') {
+            console.log('a intrat2')
+            const parties = await Party.find({creatorId: req.params.id})
+            res.send({
+                parties
+            })
+        } 
+    } catch(err) {
+        res.status(400).send({
+            error: {
+                message:err,
+                status:400
+            }
+        })
+    }
+})
+
 router.post('/addParty', verify, async (req, res) => {
     const { error } = addPartyValidation(req.body)
     if (error) return res.status(400).send({
