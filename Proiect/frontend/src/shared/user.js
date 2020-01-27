@@ -3,3 +3,5 @@ export const USER_DETAILS = {
     id : localStorage.getItem('id'),
     role : localStorage.getItem('role')
 }
+
+export const AUTH_TOKEN =  localStorage.getItem('auth-token')

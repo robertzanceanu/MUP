@@ -3,6 +3,7 @@ let webpackMerge = require("webpack-merge")
 let HTMLWebpackPlugin = require("html-webpack-plugin")
 let CopyWebpackPlugin = require("copy-webpack-plugin")
 let ImageminWebpWebpackPlugin = require("imagemin-webp-webpack-plugin")
+let path = require('path')
 
 module.exports = ({ mode }) => {
   return webpackMerge(
@@ -10,6 +11,12 @@ module.exports = ({ mode }) => {
       entry: ["./src/app.js"],
       devServer: {
         historyApiFallback: true,
+      },
+      output: {
+        path: path.resolve(__dirname, '..', 'dist'),
+        publicPath: '/',
+        filename: '[name].[hash].js',
+
       },
       plugins: [
         new CopyWebpackPlugin([

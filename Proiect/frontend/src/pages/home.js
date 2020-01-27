@@ -43,18 +43,13 @@ let Home = {
     render: async () => {
         let response = await getParties()
         let user = { ...USER_DETAILS }
-        console.log(response)
         if (response.error) {
             if (response.error.status === 401) {
                 return `${await Unauthorized.render()}`
             }
         }
         return `
-            <header class="header">
-                <img src="./assets/images/logo.png" width="100px" height="100px">
-                <p class="text"> Pagini</p>
-            </header>
-            <div class="page-wrapper">
+            <div class="page-wrapper" id="page">
                 <div class="wrap">
                     <button type="button" class="open-button" id="openForm">
                         ${user.role === 'partyOrganizer' ? 
@@ -118,7 +113,6 @@ let Home = {
             document.getElementById("blurForm").style.display = "none";
         })
         document.getElementById('submitCreatePartyForm').addEventListener('click', async(e) => {
-            console.log('a intart')
             e.preventDefault()
             let user = { ...USER_DETAILS }
             let name = document.getElementById('partyName')
@@ -128,8 +122,18 @@ let Home = {
                 duration: duration.value,
                 creatorId: user.id
             }
-            console.log(formValues)
             const response = await submitCreateParty(formValues)
+            if(response.error) {
+                let node = document.createElement('div')
+                node.innerHTML = showError(response.error.status, response.error.message)
+                document.getElementById('page').appendChild(node)
+                setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
+            }
+            else {
+                document.getElementById("myForm").style.display = "none";
+                document.getElementById("blurForm").style.display = "none";
+                window.location.reload(true)
+            }
         })
     }
 }

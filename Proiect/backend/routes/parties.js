@@ -7,12 +7,9 @@ const OpenParties = require('../model/openPartyModel')
 const User = require('../model/userModel')
 
 router.get('/getParties/:id', verify, async(req,res) => {
-    console.log('a intrat')
     try {
         const user = await User.findOne({_id:req.params.id})
-        console.log('a intrat1', user)
         if(user.role === 'partyOrganizer') {
-            console.log('a intrat2')
             const parties = await Party.find({creatorId: req.params.id})
             res.send({
                 parties
@@ -83,14 +80,30 @@ router.get('/getParty/:id', verify, async (req, res) => {
 
     } catch (err) {
         res.status(400).send({
-            errors: {
+            error: {
                 message: 'Petrecere inexistenta',
                 status: 400
             }
         })
     }
 })
-
+router.get('/getLiveParty/statistics/:id', verify, async(req,res) => {
+    try {
+        const party =await OpenParties.find({partyId: req.params.id})
+        console.log(party.length)
+        let statistics = {
+            numberOfPlayers: party.length
+        }
+        res.send({statistics})
+    } catch(err) {
+        res.status(400).send({
+            error: {
+                message: 'Petrecerea nu este live',
+                status:400
+            }
+        })
+    }
+})
 router.post('/openParty/:id', verify, async (req, res) => {
     const party = await Party.findOne({ _id: req.params.id })
     if (party.partyCode !== req.body.partyCode)
