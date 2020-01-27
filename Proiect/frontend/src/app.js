@@ -7,6 +7,8 @@ import NotFound from './pages/notfound404'
 import Unauthorized from './pages/unauthorized401'
 import PartyView from './pages/party/partyView'
 import Header from './components/header'
+import Account from './pages/myaccount'
+import Statistics from './pages/statistics'
 
 import ParseRequestUrl from './shared/utils'
 
@@ -18,6 +20,8 @@ const routes = {
     '/party/:id': PartyView,
     // '/:id':Party,
     '/home':Home,
+    '/myaccount':Account,
+    '/statistics':Statistics
 }
 
 const router = async () => {
