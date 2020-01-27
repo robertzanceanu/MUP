@@ -90,11 +90,28 @@ router.get('/getParty/:id', verify, async (req, res) => {
 router.get('/getLiveParty/statistics/:id', verify, async(req,res) => {
     try {
         const party =await OpenParties.find({partyId: req.params.id})
-        console.log(party.length)
         let statistics = {
             numberOfPlayers: party.length
         }
-        res.send({statistics})
+        res.send({...statistics})
+    } catch(err) {
+        res.status(400).send({
+            error: {
+                message: 'Petrecerea nu este live',
+                status:400
+            }
+        })
+    }
+})
+router.get('/getLiveParty/nowPlaying/:id', verify, async(req,res) => {
+    try {
+        const party =await OpenParties.find({partyId: req.params.id})
+        // console.log(party.length)
+        // let statistics = {
+        //     numberOfPlayers: party.length
+        // }
+        let nowPlaying = party[0].nowPlaying
+        res.send({nowPlaying:nowPlaying})
     } catch(err) {
         res.status(400).send({
             error: {
