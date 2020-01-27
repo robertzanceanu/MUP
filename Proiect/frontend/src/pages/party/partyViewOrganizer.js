@@ -1,6 +1,6 @@
 let PartyViewOrganizer = {
-    render: async (userDetails, partyDetails) => {
-        console.log('aaaa',userDetails, partyDetails)
+    render: async (userDetails, partyDetails, statistics, nowPlaying) => {
+        console.log('aaaa',userDetails, partyDetails, statistics, nowPlaying)
         return`
         <div class="wrapper">
             <div class="page-button">
@@ -32,6 +32,27 @@ let PartyViewOrganizer = {
                         <div class="card-details">${partyDetails.duration} minute</div>
                     </div>
                 </div>
+                ${
+                    (partyDetails.status === 'live' || partyDetails.status === 'closed') &&
+                    `
+                        <div class="card">
+                            <div class="card-title">Statistici</div>
+                            <div class="card-infos">
+                                <div class="card-info">Numarul de petrecareti:</div>
+                                <div class="card-details">${statistics.numberOfPlayers}</div>
+                            </div>
+                        </div>
+                    `
+                }
+                ${
+                    partyDetails.status === 'live' &&
+                    `
+                        <div class="card">
+                            <div class="card-title">Melodia redata acum</div>
+                            <div class="card-info">${nowPlaying.nowPlaying === 'none' ? 'Inca nu este redata nicio melodie': nowPlaying.nowPlaying}</div>
+                        </div>
+                    `
+                }
             </div>
         </div>
             
