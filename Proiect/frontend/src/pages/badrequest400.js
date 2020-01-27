@@ -1,6 +1,3 @@
-const onSubmit = async (values) => {
-    console.log(values)
-}
 let BadRequest = {
     render: async () => {
         return `

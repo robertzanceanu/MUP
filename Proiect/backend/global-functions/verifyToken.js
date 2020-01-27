@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 
 function verified(req,res,next) {
     const token = req.header('auth-token')
+    console.log('ggggg',token)
     if(!token) return res.status(401).send({
         error:{
             message:'Access denied',

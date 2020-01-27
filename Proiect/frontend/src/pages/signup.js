@@ -70,7 +70,6 @@ let Signup = {
     },
     after_render: async () => {
         document.getElementById('submit-button').addEventListener('click', async () => {
-            console.log('aici')
             let formValues={}
             let email = document.getElementById('email_signup')
             let password = document.getElementById('password_signup')
