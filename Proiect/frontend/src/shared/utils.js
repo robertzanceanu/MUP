@@ -4,7 +4,7 @@ let ParseRequestUrl = () => {
     let urlRequest = {
         resource: r[0],
         id: r[1],
-        verb: r[32]
+        verb: r[2]
     }
     return urlRequest
 }

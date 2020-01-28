@@ -1,5 +1,5 @@
 import { API_URL } from '../constants'
-import errorHandel from '../shared/card_error'
+import showError from '../shared/card_error'
 const onSubmit = async (values) => {
     let data = {
         email: values.email,
@@ -14,21 +14,14 @@ const onSubmit = async (values) => {
             },
             body: JSON.stringify(data)
         })
-        // errorHandel(response.status,response);
 
         const json = await response.json()
-        if (json.error) {
-            errorHandel(json.error.status, json.error.message);
-        }
         localStorage.setItem('auth-token', json.token)
         localStorage.setItem('id', json.id)
         localStorage.setItem('name', json.name)
         localStorage.setItem('role', json.role)
-        // window.location.pathname='/home'
         return json
     } catch (err) {
-        // errorHandel(response.err);
-
         console.log(err)
     }
 }
@@ -67,7 +60,6 @@ let Login = {
     },
     after_render: async () => {
         document.getElementById('submit-button').addEventListener('click', async () => {
-            console.log('aici')
             let formValues = {}
             let email = document.getElementById('email_login')
             let password = document.getElementById('password_login')
@@ -76,11 +68,15 @@ let Login = {
                 password: password.value
             }
             let response = await onSubmit(formValues)
-            let node = document.createElement('div')
-            node.innerHTML = errorHandel(response.error.status, response.error.message)
-            document.getElementById('page').appendChild(node)
-            setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
-
+            if(response.error) {
+                let node = document.createElement('div')
+                node.innerHTML = showError(response.error.status, response.error.message)
+                document.getElementById('page').appendChild(node)
+                setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
+            }
+            else {
+                window.location.pathname='/home'
+            }
         })
     }
 }

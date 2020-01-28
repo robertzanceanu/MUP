@@ -1,8 +1,7 @@
 import {API_URL} from '../constants'
-import errorHandel from '../shared/card_error'
+import showError from '../shared/card_error'
 
 const onSubmit =  async (values) => {
-    console.log(values)
     try {
         const response = await fetch(`${API_URL}/user/register`, {
             method:'post',
@@ -13,7 +12,6 @@ const onSubmit =  async (values) => {
             body: JSON.stringify(values)
         })
         const json = await response.json()
-        // window.location.pathname='/login'
         return json
     }
     catch(err) {
@@ -72,7 +70,6 @@ let Signup = {
     },
     after_render: async () => {
         document.getElementById('submit-button').addEventListener('click', async () => {
-            console.log('aici')
             let formValues={}
             let email = document.getElementById('email_signup')
             let password = document.getElementById('password_signup')
@@ -89,10 +86,16 @@ let Signup = {
                 role:role.value
             }
             let response = await onSubmit(formValues)
-            let node = document.createElement('div')
-            node.innerHTML = errorHandel(response.error.status, response.error.message)
-            document.getElementById('page').appendChild(node)
-            setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
+            if(response.error) {
+                let node = document.createElement('div')
+                node.innerHTML = showError(response.error.status, response.error.message)
+                document.getElementById('page').appendChild(node)
+                setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
+            }
+            else {
+                window.location.pathname='/login'
+            }
+
 
         })
     }

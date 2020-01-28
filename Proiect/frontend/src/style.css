@@ -4,7 +4,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: #000000;
+    background: #222326;
 }
 
 #main {
@@ -15,7 +15,7 @@ html, body {
 
 .page-wrapper {
     width: 100%;
-    padding: 20px;
+    padding: 20px 40px 10px 40px;
     box-sizing: border-box;
 }
 
@@ -64,7 +64,13 @@ html, body {
     color: #222326;
     margin-bottom: 4px;
 }
-
+.labelWhite {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
 .input {
     padding: 3px 5px 3px 5px;
     width: 100%;
@@ -143,8 +149,11 @@ a {
 
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    background: rgba(70,72,78, 0.2);
+    box-shadow: 0 4px 2px -2px rgba(70,72,78, 0.5);
+    width:100%;
+    padding: 20px 40px 10px 20px;
 }
 
 .header .text {
@@ -162,17 +171,53 @@ a {
 .block-party {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 10px;
 }
 
 .party {
-    border: lightsteelblue 2px solid;
-    width: 85%;
-    height: 20%;
-    margin-top: 1%;
-    background-color: whitesmoke;
+    width: 340px;
+    background-color: white;
+    border-radius: 8px;
+    height: fit-content;
+    padding:10px 15px;
+    color:black;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
 }
-
+.party:hover{
+    transform: scale(1.1);
+}
+.partyName {
+    font-size:20px;
+    margin-bottom:5px;
+    font-weight: bold;
+}
+.partyFlex {
+    display:flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.partyLabel {
+    font-size: 16px;
+}
+.partyLive {
+    color:green;
+    font-size:18px;
+    font-weight: bold;
+}
+.partyOpen {
+    color:grey;
+    font-size:18px;
+    font-weight: bold;
+}
+.partyCode{
+    font-size:18px;
+    font-weight: bold;
+}
 .wrap {
     display: flex;
     justify-content: flex-end;
@@ -182,27 +227,22 @@ a {
     box-sizing: border-box;
 }
 
-/* Button used to open the contact form - fixed at the bottom of the page */
 
 .open-button {
-    padding: 5px 5px 5px 5px;
     display: block;
     border: none;
-    background-color: #222326;
-    color: white;
-    text-align: right;
-    margin-right: 5%;
-    background-color: #555;
+    background-color: #005599;
     color: white;
     padding: 16px 20px;
     border: none;
     cursor: pointer;
     opacity: 0.8;
+    border-radius: 8px;
 }
 
-/* The popup form - hidden by default */
 
 .form-popup {
+    color: white;
     display: none;
     position: fixed;
     left: calc(-50vw + 50%);
@@ -211,61 +251,64 @@ a {
     margin-right: auto;
     bottom: 10%;
     top: 12.5%;
-    height: 45%;
+    height: fit-content;
     width: 45%;
     z-index: 9;
+    background-color:rgba(70,72,78, 0.5);
+    }
+
+.container-opp{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    position: fixed;
+    top: 0;
+    z-index: 0;
+    display: none;
+
 }
 
-/* Add styles to the form container */
 
 .form-container {
     width: 100%;
+    height: 100%;
     padding: 10px;
-    background-color: white;
+    box-shadow: 0px 3px 3px 5px rgba(70,72,78, 0.2);
 }
-
-/* Full-width input fields */
-
-.form-container input[type=text], .form-container input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    border: none;
-    background: #f1f1f1;
-}
-
-/* When the inputs get focus, do something */
-
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-}
-
-/* Set a style for the submit/login button */
 
 .form-container .btn {
-    background-color: #4CAF50;
+    background-color: blue;
     color: white;
     padding: 16px 20px;
     border: none;
     cursor: pointer;
     width: 100%;
+    margin-top: 10px;
     margin-bottom: 10px;
     opacity: 0.8;
 }
 
-/* Add a red background color to the cancel button */
-
 .form-container .cancel {
+    background-color: black;
+}
+.form-container .cancel:hover {
     background-color: red;
 }
-
-/* Add some hover effects to buttons */
 
 .form-container .btn:hover, .open-button:hover {
     opacity: 1;
 }
 
+input, label{
+    display:block;
+    padding-top: 5px;
+    padding-bottom: 7px;
+}
+
+.form-container.blur{
+    filter: 'blur(4px)';
+    -webkit-filter: 'blur(4px)';
+}
 .errorCard {
     display: flex;
     align-items: center;
@@ -303,4 +346,80 @@ a {
         right: -150px;
         top: 0px;
     }
+}
+.wrapper {
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+.page-button {
+    align-self: flex-end;
+}
+.action-button {
+    width:170px;
+    height: 50px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 16px 20px;
+    opacity: 0.7;
+}
+.start-button {
+    background: #2E8B57;
+}
+.close-button {
+    background: #8B0000;
+}
+.action-button:hover{
+    opacity: 1;
+}
+.page-flex {
+    display:flex;
+    width: 100%;
+    height: fit-content;
+    flex-wrap: wrap;
+}
+.card {
+    display:flex;
+    flex-direction: column;
+    padding:15px 10px;
+    width:350px;
+    height: fit-content;
+    border-radius: 8px;
+    background: white;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
+.card-title {
+    font-size:20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.card-infos {
+    display: flex;
+    margin-bottom: 5px;
+}
+.card-info {
+    font-size: 16px;
+}
+.card-details {
+    font-size:16px;
+    font-weight: bold;
+}
+
+.header a{
+    color:white;
+
+}
+
+.header a:hover{
+    background-color: white;
+    color: black;
+}
+
+.pages{
+    margin-left: auto;
 }

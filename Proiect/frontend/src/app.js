@@ -5,34 +5,42 @@ import FirstPage from './pages/firstpage'
 import BadRequest from './pages/badrequest400'
 import NotFound from './pages/notfound404'
 import Unauthorized from './pages/unauthorized401'
+import PartyView from './pages/party/partyView'
+import Header from './components/header'
+import Account from './pages/myaccount'
+import Statistics from './pages/statistics'
 
 import ParseRequestUrl from './shared/utils'
 
 const routes = {
     '/login':Login,
     '/signup':Signup,
-    '/firstpage':FirstPage,
-    '/badrequest':BadRequest,
-    '/notfound':NotFound,
-    '/unauthorized':Unauthorized,
-    '/':Home,
+    '/':FirstPage,
     // '/':Home,
-    '/home':Home
-
+    '/party/:id': PartyView,
+    // '/:id':Party,
+    '/home':Home,
+    '/myaccount':Account,
+    '/statistics':Statistics
 }
 
 const router = async () => {
     let request = ParseRequestUrl()
-    let parsedURL = (request.resource ? '/' + request.resource : '/') + (request.id ? '/:id' : '') + (request.verb ? '/' + request.verb : '')
-
-    let page = routes[parsedURL] ? routes[parsedURL] : 'error'
-    
-    const content = null || document.getElementById('main')
+    let parsedURL = (request.resource ? '/' + request.resource : '/') + (request.id ? `/:id` : '') + (request.verb ? '/' + request.verb : '')
+    let page = routes[parsedURL] ? routes[parsedURL] : NotFound
+    let header = document.getElementById('header')
+    if(parsedURL !== '/' && parsedURL !== '/login' && parsedURL !=='/signup') {
+        header.innerHTML = await Header.render()
+        await Header.after_render()
+    }
+    const content = document.getElementById('main')
     content.innerHTML = await page.render()
-    console.log('aici2')
     await page.after_render()
 }
+window.addEventListener('hashchange', () => {
+    router()
+})
 
-window.addEventListener('hashchange', router)
-
-window.addEventListener('load', router)
+window.addEventListener('load', () => {
+    router()
+})
