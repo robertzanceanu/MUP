@@ -102,6 +102,42 @@ const detectMotion = async(motionArray) => {
             body: JSON.stringify(data)
         })
         const json = await response.json()
+        getNextSong()
+        return json
+    } catch (err) {
+        console.log(err)
+    }
+}
+const getFirstSong = async() => {
+    let partyId = location.pathname.split('/')[2]
+    try {
+        const response = await fetch(`${API_URL}/parties/playFirstSong/${partyId}`, {
+            method: 'get',
+            headers: {
+                'Accept': 'aplication/json',
+                'auth-token': `${AUTH_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        const json = await response.json()
+        window.location.reload(true)
+        return json
+    } catch (err) {
+        console.log(err)
+    }
+}
+const getNextSong = async() => {
+    let partyId = location.pathname.split('/')[2]
+    try {
+        const response = await fetch(`${API_URL}/parties/getNextSong/${partyId}`, {
+            method: 'get',
+            headers: {
+                'Accept': 'aplication/json',
+                'auth-token': `${AUTH_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        const json = await response.json()
         return json
     } catch (err) {
         console.log(err)
@@ -135,7 +171,7 @@ let PartyView = {
         let userDetails = { ...USER_DETAILS }
         console.log('a pornit')
         if (userDetails.role === 'partyOrganizer'){
-            await PartyViewOrganizer.after_render(startParty, getParty)
+            await PartyViewOrganizer.after_render(startParty, getParty,getFirstSong)
         }
         else {
             await PartyViewUser.after_render(detectMotion)

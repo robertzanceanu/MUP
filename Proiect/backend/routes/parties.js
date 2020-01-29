@@ -5,46 +5,44 @@ const { addPartyValidation } = require('../validation')
 const Party = require('../model/partyModel')
 const OpenParties = require('../model/openPartyModel')
 const User = require('../model/userModel')
-let {initSpotify, getRecommandations} = require('../global-functions/spotify')
+let { initSpotify, getRecommandations } = require('../global-functions/spotify')
 let spotifyApi = initSpotify()
 
-router.get('/getParties/:id', verify, async(req,res) => {
+router.get('/getParties/:id', verify, async (req, res) => {
     try {
-        const user = await User.findOne({_id:req.params.id})
-        if(user.role === 'partyOrganizer') {
-            const parties = await Party.find({creatorId: req.params.id})
+        const user = await User.findOne({ _id: req.params.id })
+        if (user.role === 'partyOrganizer') {
+            const parties = await Party.find({ creatorId: req.params.id })
             res.send({
                 parties
             })
         } else {
-            const parties = await Party.find({status: 'live'})
+            const parties = await Party.find({ status: 'live' })
             const partiesWithoutCode = []
-            const inParty = await OpenParties.findOne({userId:req.params.id})
-            console.log('aaaa', inParty)
-            parties.forEach(async(party,index) => {
-                console.log(party)
+            const inParty = await OpenParties.findOne({ userId: req.params.id })
+            parties.forEach(async (party, index) => {
                 let found = false
-                if(inParty) {
-                    if(inParty.partyId === party.id) {
+                if (inParty) {
+                    if (inParty.partyId === party.id) {
                         found = true
                     }
                 }
                 partiesWithoutCode.push({
-                    _id:party.id,
-                    name:party.name,
-                    status:party.status,
+                    _id: party.id,
+                    name: party.name,
+                    status: party.status,
                     inParty: found
                 })
             })
             res.send({
-                parties:partiesWithoutCode
+                parties: partiesWithoutCode
             })
         }
-    } catch(err) {
+    } catch (err) {
         res.status(400).send({
             error: {
-                message:err,
-                status:400
+                message: err,
+                status: 400
             }
         })
     }
@@ -84,7 +82,6 @@ router.post('/addParty', verify, async (req, res) => {
 })
 router.put('/startParty/:id', verify, async (req, res) => {
     const party = await Party.findOne({ _id: req.params.id })
-    console.log(req.params.id)
     party.status = 'live'
     try {
         const savedParty = await party.save()
@@ -112,36 +109,42 @@ router.get('/getParty/:id', verify, async (req, res) => {
         })
     }
 })
-router.get('/getLiveParty/statistics/:id', verify, async(req,res) => {
+router.get('/getLiveParty/statistics/:id', verify, async (req, res) => {
     try {
-        const party =await OpenParties.find({partyId: req.params.id})
+        const party = await OpenParties.find({ partyId: req.params.id })
         let statistics = {
             numberOfPlayers: party.length
         }
-        res.send({...statistics})
-    } catch(err) {
+        res.send({ ...statistics })
+    } catch (err) {
         res.status(400).send({
             error: {
                 message: 'Petrecerea nu este live',
-                status:400
+                status: 400
             }
         })
     }
 })
-router.get('/getLiveParty/nowPlaying/:id', verify, async(req,res) => {
+router.get('/getLiveParty/nowPlaying/:id', verify, async (req, res) => {
     try {
-        const party =await OpenParties.find({partyId: req.params.id})
+        const liveParty = await OpenParties.find({ partyId: req.params.id })
         // console.log(party.length)
         // let statistics = {
         //     numberOfPlayers: party.length
         // }
-        let nowPlaying = party[0].nowPlaying
-        res.send({nowPlaying:nowPlaying})
-    } catch(err) {
+        const party = await Party.findOne({_id:req.params.id})
+        let nowPlaying = ''
+        if(liveParty.length===0 && party) {
+            nowPlaying = "Nu sunt oameni inscrisi la petrecere"
+        } else {
+            nowPlaying = liveParty[0].nowPlaying
+        }
+        res.send({ nowPlaying: nowPlaying })
+    } catch (err) {
         res.status(400).send({
             error: {
                 message: 'Petrecerea nu este live',
-                status:400
+                status: 400
             }
         })
     }
@@ -170,7 +173,7 @@ router.post('/joinParty/:id', verify, async (req, res) => {
         favSong: req.body.favSong,
         favGenre: req.body.favGenre,
         isDancing: 0,
-        nowPlaying: 'none'
+        nowPlaying: 'none',
     })
     const userExistsInParty = await OpenParties.findOne({ userId: req.body.userId, partyId: req.params.id })
     if (userExistsInParty) {
@@ -201,6 +204,14 @@ router.post('/joinParty/:id', verify, async (req, res) => {
     }
     try {
         const savedOpenParty = await addToOpenParty.save()
+        console.log(await !Party.find({ _id: req.params.id }).partyGenres.include(req.body.favGenre))
+        const updatePartyGenres = await Party.update(
+            { _id: req.params.id },
+            {
+                $push: { "partyGenres": await !Party.find({ _id: req.params.id }).partyGenres.include(req.body.favGenre) }
+            }
+        )
+        await updatePartyGenres.save()
         res.send(savedOpenParty)
     } catch (err) {
         res.status(400).send({
@@ -226,44 +237,170 @@ router.get('/userOpenParty/:id', verify, async (req, res) => {
         })
     }
 })
-// router.put('/userOpenParty/:id', verify, async (req, res) => {
-//     const userOpenParty = await OpenParties.findOne({
-//         _id: req.params.id
-//     })
-//     userOpenParty.favArtist= req.body.favArtist
-//     userOpenParty.favSong= req.body.favSong
-//     userOpenParty.favGenre= req.body.favGenre
-//     try {
-//         const savedUserOpenParty = await userOpenParty.save()
-//         res.send(savedUserOpenParty)
-//     } catch (err) {
-//         res.status(400).send({
-//             error: {
-//                 message: err,
-//                 status: 400
-//             }
-//         })
-//     }
-// })
 
-router.put('/openParty/modifyDancing/:id', verify, async (req,res) => {
-    let openParty = await OpenParties.findOne({partyId:req.params.id, userId:req.body.userId})
+router.put('/openParty/modifyDancing/:id', verify, async (req, res) => {
+    let openParty = await OpenParties.findOne({ partyId: req.params.id, userId: req.body.userId })
     openParty.isDancing = req.body.isDancing
     try {
         const openPartyUpdated = await openParty.save()
         res.send(openPartyUpdated)
-    } catch(err) {
+    } catch (err) {
         res.status(400).send({
             error: {
-                message:err,
-                status:400
+                message: err,
+                status: 400
             }
         })
     }
 })
-router.get('/getNextSong/:id', verify, async(req, res) => {
-    let liveParty = await OpenParties.find({partyId:req.params.id})
-    console.log(liveParty)
-    res.send(liveParty)
+router.get('/playFirstSong/:id', verify, async (req, res) => {
+    let liveParty = await OpenParties.find({ partyId: req.params.id })
+    let genres = {}
+    liveParty.map((user, index) => {
+        // genres.push()
+        if (genres.hasOwnProperty(`${user.favGenre.toLowerCase()}`)) {
+            genres[`${user.favGenre.toLowerCase()}`] = genres[`${user.favGenre.toLowerCase()}`] + 1
+        }
+        else {
+            genres[`${user.favGenre.toLowerCase()}`] = 1
+        }
+    })
+    console.log(genres)
+    let favGenre = ''
+    let max = 0
+    Object.keys(genres).forEach((item) => {
+        if (genres[item] > max) {
+            max = genres[item]
+            favGenre = item
+        }
+    })
+    console.log(favGenre)
+    // let spotifyRecommandations = getRecommandations(spotifyApi, favGenre)
+    Promise.resolve(getRecommandations(spotifyApi, favGenre))
+        .then(async (data) => {
+            // console.log('aici',data )
+            await OpenParties.updateMany(
+                { partyId: req.params.id },
+                {
+                    nowPlaying: `${data[0].name} ${data[0].artists[0].name}`,
+                    nowGenre: favGenre
+                }
+            )
+            // const saved = await playFirstSong.save()
+            await Party.update(
+                { _id: req.params.id },
+                {
+                    $push: { "playedSongs": `${data[0].name} ${data[0].artists[0].name}` }
+                }
+            )
+            res.send({
+                nowPlaying: `${data[0].name} ${data[0].artists[0].name}`
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+router.get('/getNextSong/:id', verify, async (req, res) => {
+    let liveParty = await OpenParties.find({ partyId: req.params.id })
+    let party = await Party.findOne({ _id: req.params.id })
+    let no = 0
+    liveParty.map((p, index) => {
+        if (p.isDancing === true)
+            no++
+    })
+    let genres = {}
+    liveParty.map((user, index) => {
+        // genres.push()
+        if (genres.hasOwnProperty(`${user.favGenre.toLowerCase()}`)) {
+            genres[`${user.favGenre.toLowerCase()}`] = genres[`${user.favGenre.toLowerCase()}`] + 1
+        }
+        else {
+            genres[`${user.favGenre.toLowerCase()}`] = 1
+        }
+    })
+    let genresArray = []
+    Object.keys(genres).forEach((item) => {
+        let json = {}
+        json.name = item
+        json.value = genres[item]
+        genresArray.push(json)
+    })
+    let sortedGenres = genresArray.sort((a, b) => b.value - a.value)
+    console.log(sortedGenres)
+    if (no >= liveParty.length / 2) {
+        Promise.resolve(getRecommandations(spotifyApi, liveParty[0].nowGenre))
+            .then(async (data) => {
+                let nextSong = ''
+                data.some((song, index) => {
+                    if (!party.playedSongs.includes(`${song.name} ${song.artists[0].name}`)) {
+                        nextSong = `${song.name} ${song.artists[0].name}`
+                        return false
+                    }
+                })
+                await OpenParties.updateMany(
+                    { partyId: req.params.id },
+                    {
+                        nowPlaying: nextSong
+                        // nowGenre: favGenre
+                    }
+                )
+                await Party.update(
+                    { _id: req.params.id },
+                    {
+                        $push: { "playedSongs": nextSong }
+                    }
+                )
+                // // const saved = await playFirstSong.save()
+                res.send({
+                    nowPlaying: nextSong
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    } else {
+        let nextGenre = ''
+        console.log(sortedGenres)
+        sortedGenres.some((genre,index) => {
+            console.log(genre.name, liveParty[0].nowGenre)
+            if (liveParty[0].nowGenre !== genre.name) {
+                console.log('intra?')
+                nextGenre = genre.name
+                return true
+            }
+        })
+        console.log(nextGenre)
+        Promise.resolve(getRecommandations(spotifyApi, nextGenre))
+            .then(async (data) => {
+                let nextSong = ''
+                data.some((song, index) => {
+                    if (!party.playedSongs.includes(`${song.name} ${song.artists[0].name}`)) {
+                        console.log('aici')
+                        nextSong = `${song.name} ${song.artists[0].name}`
+                        return true
+                    }
+                })
+                await OpenParties.updateMany(
+                    { partyId: req.params.id },
+                    {
+                        nowPlaying: nextSong,
+                        nowGenre: nextGenre
+                    }
+                )
+                await Party.update(
+                    { _id: req.params.id },
+                    {
+                        $push: { "playedSongs": nextSong }
+                    }
+                )
+                res.send({
+                    nowPlaying: nextSong
+                })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 })
 module.exports = router
