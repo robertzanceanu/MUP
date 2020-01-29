@@ -4,6 +4,61 @@ const bcrypt = require('bcryptjs')
 const { registerValidation, loginValidation } = require('../validation')
 const jwt = require('jsonwebtoken')
 
+
+
+/**
+ * @swagger
+ * tags:
+ *     name: User
+ *     description: All the routes affecting Archives
+ */
+
+
+
+/**
+ * @swagger
+ * 
+ * 
+ * paths:
+ *  /api/user/register:
+ *   post:
+ *     descriptions: Use to regist a user
+ *     produces:
+ *        - "application/json"
+ *     parameters:
+ *       - in: body
+ *         name: user
+ *         description: Use to regist a user.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - firstName
+ *             - lastName
+ *             - email
+ *             - password
+ *             - role
+ *             - confirm_password
+ *           properties:
+ *             role:
+ *               type: string
+ *             firstName:
+ *               type: string
+ *             lastName:
+ *               type: string
+ *             password:
+ *               type: string
+ *             email:
+ *               type: string
+ *             confirm_password:
+ *               type: string
+ *     responses:
+ *       '200':
+ *           description:A succesful response
+ *     tags:
+ *       - User
+ */
+
+
 router.post('/register', async (req,res) => {
     const {error} = registerValidation(req.body)
     if(error) return res.status(400).send({
@@ -48,6 +103,37 @@ router.post('/register', async (req,res) => {
             })
     }
 })
+
+
+ /**
+ * @swagger
+ * paths:
+ *  /api/user/login:
+ *   post:
+ *     descriptions: Use to login
+ *     produces:
+ *        - "application/json"
+ *     parameters:
+ *       - in: body
+ *         name: user
+ *         description: Use to login a user.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - email
+ *             - password
+
+ *           properties:
+ *             email:
+ *               type: string
+ *             password:
+ *               type: string
+ *     responses:
+ *       '200':
+ *           description:A succesful response
+ *     tags:
+ *       - User
+ */
 
 router.post('/login', async (req,res) => {
     const {error} = loginValidation(req.body)
