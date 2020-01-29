@@ -11,6 +11,8 @@ module.exports = ({ mode }) => {
       entry: ["./src/app.js"],
       devServer: {
         historyApiFallback: true,
+        host: '0.0.0.0',
+        useLocalIp: true
       },
       output: {
         path: path.resolve(__dirname, '..', 'dist'),
