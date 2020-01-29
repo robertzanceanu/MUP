@@ -8,6 +8,35 @@ const User = require('../model/userModel')
 let { initSpotify, getRecommandations } = require('../global-functions/spotify')
 let spotifyApi = initSpotify()
 
+/**
+ * @swagger
+ * tags:
+ *     name: Party
+ *     description: All the routes affecting Archives
+ */
+
+/**
+ * @swagger
+ * /api/parties/getParties/{id}:
+ *    get:
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *            required:
+ *              - id
+ *          required: true
+ *          minimum: 1
+ *          description: Parties id
+ *      responses:
+ *        200:
+ *           description: fetch archives
+ *      tags:
+ *        - Party
+ */
+
+
 router.get('/getParties/:id', verify, async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.id })
@@ -48,6 +77,48 @@ router.get('/getParties/:id', verify, async (req, res) => {
     }
 })
 
+
+/**
+ * @swagger
+ * paths:
+ *  /api/parties/addParty:
+ *   post:
+ *     descriptions: Use to create a party.
+ *     produces:
+ *        - "application/json"
+ *     parameters:
+ *       - in: body
+ *         name: user
+ *         description: Use to create a party
+ *         schema:
+ *           type: object
+ *           required:
+ *             - creatorId
+ *             - status
+ *             - duration
+ *             - name
+ *             - createdAt
+ *             - partyCode
+ *           properties:
+ *             status:
+ *               type: string
+ *             duration:
+ *               type: string
+ *             creatorId:
+ *               type: string
+ *             name:
+ *               type: string
+ *             createdAt:
+ *               type: string
+ *               format: date-time
+ *             partyCode:
+ *               type: string
+ *     responses:
+ *       '200':
+ *           description:A succesful response
+ *     tags:
+ *       - Party
+ */
 router.post('/addParty', verify, async (req, res) => {
     const { error } = addPartyValidation(req.body)
     if (error) return res.status(400).send({
@@ -80,6 +151,41 @@ router.post('/addParty', verify, async (req, res) => {
         })
     }
 })
+/**
+ * @swagger
+ * paths:
+ *  /api/parties/startParty/{id}:
+ *   put:
+ *     descriptions: Use to create a party.
+ *     produces:
+ *        - "application/json"
+ *     parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *            required:
+ *              - id
+ *          required: true
+ *          minimum: 1
+ *          description: Id party
+ *        - in: body
+ *          name: starts
+ *          description: Status party
+ *          schema:
+ *              type: object
+ *              requierd:
+ *                  - starts
+ *              properties:
+ *                  starts: 
+ *                      type:string
+ *          
+ *     responses:
+ *       '200':
+ *           description:A succesful response
+ *     tags:
+ *       - Party
+ */
 router.put('/startParty/:id', verify, async (req, res) => {
     const party = await Party.findOne({ _id: req.params.id })
     party.status = 'live'
@@ -95,6 +201,27 @@ router.put('/startParty/:id', verify, async (req, res) => {
         })
     }
 })
+
+/**
+ * @swagger
+ * /api/parties/getParty/{id}:
+ *    get:
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *            required:
+ *              - id
+ *          required: true
+ *          minimum: 1
+ *          description: Party id
+ *      responses:
+ *        200:
+ *           description: fetch archives
+ *      tags:
+ *        - Party
+ */
 router.get('/getParty/:id', verify, async (req, res) => {
     try {
         const party = await Party.findOne({ _id: req.params.id })
@@ -109,6 +236,27 @@ router.get('/getParty/:id', verify, async (req, res) => {
         })
     }
 })
+
+/**
+ * @swagger
+ * /api/parties/getLiveParty/statistics/{id}:
+ *    get:
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *            required:
+ *              - id
+ *          required: true
+ *          minimum: 1
+ *          description: Party id
+ *      responses:
+ *        200:
+ *           description: fetch archives
+ *      tags:
+ *        - Party
+ */
 router.get('/getLiveParty/statistics/:id', verify, async (req, res) => {
     try {
         const party = await OpenParties.find({ partyId: req.params.id })
@@ -125,6 +273,27 @@ router.get('/getLiveParty/statistics/:id', verify, async (req, res) => {
         })
     }
 })
+
+/**
+ * @swagger
+ * /api/parties/getLiveParty/nowPlaying/{id}:
+ *    get:
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *            required:
+ *              - id
+ *          required: true
+ *          minimum: 1
+ *          description: Party id
+ *      responses:
+ *        200:
+ *           description: fetch archives
+ *      tags:
+ *        - Party
+ */
 router.get('/getLiveParty/nowPlaying/:id', verify, async (req, res) => {
     try {
         const liveParty = await OpenParties.find({ partyId: req.params.id })
@@ -132,9 +301,9 @@ router.get('/getLiveParty/nowPlaying/:id', verify, async (req, res) => {
         // let statistics = {
         //     numberOfPlayers: party.length
         // }
-        const party = await Party.findOne({_id:req.params.id})
+        const party = await Party.findOne({ _id: req.params.id })
         let nowPlaying = ''
-        if(liveParty.length===0 && party) {
+        if (liveParty.length === 0 && party) {
             nowPlaying = "Nu sunt oameni inscrisi la petrecere"
         } else {
             nowPlaying = liveParty[0].nowPlaying
@@ -149,6 +318,55 @@ router.get('/getLiveParty/nowPlaying/:id', verify, async (req, res) => {
         })
     }
 })
+
+/**
+ * @swagger
+ * 
+ * 
+ * paths:
+ *  /api/parties/joinParty/{id}:
+ *   post:
+ *     produces:
+ *        - "application/json"
+ *     parameters:
+ *       - in: path
+ *           name:id
+ *           type:integer
+ *       - in: body
+ *         name: user
+ *         description: Use to regist a user.
+ *         schema:
+ *           type: object
+ *           required:
+ *             - partyId
+ *             - userId
+ *             - favArtist
+ *             - favSong
+ *             - favGenre
+ *             - isDancing
+ *             - nowPlaying
+ *           properties:
+ *             partyId:
+ *               type: string
+ *             userId:
+ *               type: string
+ *             favArtist:
+ *               type: string
+ *             favSong:
+ *               type: string
+ *             favGenre:
+ *               type: string
+ *             isDancing:
+ *               type: string
+ *             nowPlaying:
+ *               type:string  
+ *     responses:
+ *       '200':
+ *           description:A succesful response
+ *     tags:
+ *       - Party
+ */
+
 router.post('/joinParty/:id', verify, async (req, res) => {
     const party = await Party.findOne({ _id: req.params.id })
     if (party.partyCode !== req.body.partyCode)
@@ -222,6 +440,27 @@ router.post('/joinParty/:id', verify, async (req, res) => {
         })
     }
 })
+
+/**
+ * @swagger
+ * /api/parties/userOpenParty/{id}:
+ *    get:
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *            required:
+ *              - id
+ *          required: true
+ *          minimum: 1
+ *          description: Party id
+ *      responses:
+ *        200:
+ *           description: fetch archives
+ *      tags:
+ *        - Party
+ */
 router.get('/userOpenParty/:id', verify, async (req, res) => {
     try {
         const party = await OpenParties.findOne({ partyId: req.params.id, userId: req.body.userId })
@@ -238,6 +477,41 @@ router.get('/userOpenParty/:id', verify, async (req, res) => {
     }
 })
 
+/**
+ * @swagger
+ * paths:
+ *  /api/parties/openParty/modifyDancing/{id}:
+ *   put:
+ *     descriptions: Use to create a party.
+ *     produces:
+ *        - "application/json"
+ *     parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *            required:
+ *              - id
+ *          required: true
+ *          minimum: 1
+ *          description: Id parties
+ *        - in: body
+ *          name: starts
+ *          description: Status party
+ *          schema:
+ *              type: object
+ *              requierd:
+ *                  - starts
+ *              properties:
+ *                  starts: 
+ *                      type:string
+ *          
+ *     responses:
+ *       '200':
+ *           description:A succesful response
+ *     tags:
+ *       - Party
+ */
 router.put('/openParty/modifyDancing/:id', verify, async (req, res) => {
     let openParty = await OpenParties.findOne({ partyId: req.params.id, userId: req.body.userId })
     openParty.isDancing = req.body.isDancing
@@ -301,6 +575,27 @@ router.get('/playFirstSong/:id', verify, async (req, res) => {
             console.log(err)
         })
 })
+
+/**
+ * @swagger
+ * /api/parties/getNextSong/{id}:
+ *    get:
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *            required:
+ *              - id
+ *          required: true
+ *          minimum: 1
+ *          description: Parties id
+ *      responses:
+ *        200:
+ *           description: fetch archives
+ *      tags:
+ *        - Party
+ */
 router.get('/getNextSong/:id', verify, async (req, res) => {
     let liveParty = await OpenParties.find({ partyId: req.params.id })
     let party = await Party.findOne({ _id: req.params.id })
@@ -362,7 +657,7 @@ router.get('/getNextSong/:id', verify, async (req, res) => {
     } else {
         let nextGenre = ''
         console.log(sortedGenres)
-        sortedGenres.some((genre,index) => {
+        sortedGenres.some((genre, index) => {
             console.log(genre.name, liveParty[0].nowGenre)
             if (liveParty[0].nowGenre !== genre.name) {
                 console.log('intra?')
@@ -402,5 +697,6 @@ router.get('/getNextSong/:id', verify, async (req, res) => {
                 console.log(err)
             })
     }
+
 })
 module.exports = router

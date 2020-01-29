@@ -102,7 +102,8 @@ const detectMotion = async(motionArray) => {
             body: JSON.stringify(data)
         })
         const json = await response.json()
-        getNextSong()
+        await getNextSong()
+        window.location.reload(true)
         return json
     } catch (err) {
         console.log(err)
@@ -120,7 +121,6 @@ const getFirstSong = async() => {
             }
         })
         const json = await response.json()
-        window.location.reload(true)
         return json
     } catch (err) {
         console.log(err)

@@ -31,7 +31,7 @@ html, body {
 }
 
 .form-wrapper {
-    width: 80%;
+    width: 65%;
     background: white;
     border-radius: 12px;
     display: flex;
@@ -43,7 +43,7 @@ html, body {
 }
 
 .field {
-    width: 50%;
+    width: 60%;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -108,15 +108,24 @@ html, body {
 }
 
 .button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-right: 20px;
     margin-left: 10px;
     background: white;
     border-radius: 8px;
     height: 30px;
-    padding: 10px 3px 3px 3px;
+    padding: 8px 8px 8px 8px;
     border: 2px solid darkgrey;
     text-align: center;
-    margin-top: 30px;
+    font-weight: 600;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    /* margin-top: 30px; */
+}
+.button-div:hover{
+    transform: scale(1.1);
 }
 
 a {
@@ -139,7 +148,7 @@ a {
 
 .logo {
     width: 70%;
-    height: 500px;
+    height: 400px;
     background-image: url("./assets/logo.png");
     background-repeat: no-repeat;
     background-size: contain;
@@ -238,6 +247,7 @@ a {
     cursor: pointer;
     opacity: 0.8;
     border-radius: 8px;
+    font-weight: 600;
 }
 
 
@@ -315,10 +325,11 @@ input, label{
     justify-content: space-between;
     z-index: 10;
     padding: 5px 10px 5px 10px;
-    background-color: rgb(209, 109, 126);
+    background-color: #8B0000;
     text-align: left;
     border-radius: 6px;
     position: fixed;
+    width: auto;
     -webkit-animation-name: errCard;
     -webkit-animation-duration: 3s;
     animation-name: errCard;
@@ -359,14 +370,14 @@ input, label{
     align-self: flex-end;
 }
 .action-button {
-    width:170px;
-    height: 50px;
+    
     border-radius: 8px;
     border: none;
     color: white;
     padding: 16px 20px;
     opacity: 0.7;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 .start-button {
     background: #2E8B57;
@@ -376,6 +387,7 @@ input, label{
 }
 .action-button:hover{
     opacity: 1;
+
 }
 .page-flex {
     display:flex;
@@ -413,14 +425,32 @@ input, label{
 
 .header a{
     color:white;
-
+    font-weight: 500;
+    margin-right: 3px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
 }
 
 .header a:hover{
+    padding: 8px 10px 8px 10px;
     background-color: white;
     color: black;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: 600;
+    border-radius: 8px;
 }
 
 .pages{
+    display: inline;
     margin-left: auto;
 }
+
+@media only screen and (max-width: 414px) {
+    .header a{
+        width: 30px;
+        height: 30px;
+        
+        padding:10px 5px 10px 5px
+    }
+      }
