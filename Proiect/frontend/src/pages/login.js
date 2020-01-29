@@ -30,7 +30,7 @@ let Login = {
     render: async () => {
         return `
             
-            <div class="page-wrapper" id='page'>
+            <form class="page-wrapper" id='page'>
                 <div class="login-page">
                     <div class="login-logo">
                         <h1 class="welcome">Bine ai venit!</h1>
@@ -54,12 +54,13 @@ let Login = {
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             
         `
     },
     after_render: async () => {
-        document.getElementById('submit-button').addEventListener('click', async () => {
+        document.getElementById('submit-button').addEventListener('click', async (e) => {
+            e.preventDefault()
             let formValues = {}
             let email = document.getElementById('email_login')
             let password = document.getElementById('password_login')

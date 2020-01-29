@@ -55,7 +55,6 @@ let PartyViewOrganizer = {
                 }
             </div>
         </div>
-            
         `
     },
     after_render: async (startParty, getParty) => {
