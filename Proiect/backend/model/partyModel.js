@@ -24,6 +24,12 @@ const partySchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         required: true
+    },
+    playedSongs: {
+        type:[String]
+    },
+    partyGenres: {
+        type:[String]
     }
 })
 

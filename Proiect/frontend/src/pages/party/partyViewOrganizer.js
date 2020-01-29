@@ -1,6 +1,5 @@
 let PartyViewOrganizer = {
     render: async (userDetails, partyDetails, statistics, nowPlaying) => {
-        console.log('aaaa',userDetails, partyDetails, statistics, nowPlaying)
         return`
         <div class="wrapper">
             <div class="page-button">
@@ -10,6 +9,14 @@ let PartyViewOrganizer = {
                 :
                 partyDetails.status === 'open' ?
                     `<button class="action-button start-button" id="start">Porneste petrecerea</button>`
+                :
+                ''
+            }   
+            </div>
+            <div class="page-button">
+            ${
+                partyDetails.status === 'live' ?
+                    `<button class="action-button start-button" id="playFirstSong">Reda prima  melodie</button>`
                 :
                 ''
             }   
@@ -57,10 +64,14 @@ let PartyViewOrganizer = {
         </div>
         `
     },
-    after_render: async (startParty, getParty) => {
+    after_render: async (startParty, getParty,getFirstSong) => {
         document.getElementById('start').addEventListener('click', async ()=> {
             await startParty()
             // await getParty()
+            window.location.reload(true)
+        })
+        document.getElementById('playFirstSong').addEventListener('click', async() => {
+            await getFirstSong()
             window.location.reload(true)
         })
     } 

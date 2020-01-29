@@ -376,9 +376,8 @@ input, label{
     color: white;
     padding: 16px 20px;
     opacity: 0.7;
-    margin-bottom: 4%;
+    margin-bottom: 10px;
     font-weight: 600;
-
 }
 .start-button {
     background: #2E8B57;

@@ -138,7 +138,6 @@ router.post('/register', async (req,res) => {
 router.post('/login', async (req,res) => {
     const {error} = loginValidation(req.body)
     if(error) return res.status(400).send(error.details[0].message)
-    console.log('a intrat')
     const user = await User.findOne({email: req.body.email})
     if(!user) return res.status(400).send(
         {
