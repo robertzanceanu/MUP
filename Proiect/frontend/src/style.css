@@ -31,7 +31,7 @@ html, body {
 }
 
 .form-wrapper {
-    width: 80%;
+    width: 65%;
     background: white;
     border-radius: 12px;
     display: flex;
@@ -43,7 +43,7 @@ html, body {
 }
 
 .field {
-    width: 50%;
+    width: 60%;
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -116,10 +116,14 @@ html, body {
     background: white;
     border-radius: 8px;
     height: 30px;
-    padding: 5px 5px 5px 5px;
+    padding: 8px 8px 8px 8px;
     border: 2px solid darkgrey;
     text-align: center;
+    font-weight: 600;
     /* margin-top: 30px; */
+}
+.button-div:hover{
+    transform: scale(1.1);
 }
 
 a {
@@ -142,7 +146,7 @@ a {
 
 .logo {
     width: 70%;
-    height: 500px;
+    height: 400px;
     background-image: url("./assets/logo.png");
     background-repeat: no-repeat;
     background-size: contain;
@@ -241,6 +245,7 @@ a {
     cursor: pointer;
     opacity: 0.8;
     border-radius: 8px;
+    font-weight: 600;
 }
 
 
@@ -415,14 +420,23 @@ input, label{
 
 .header a{
     color:white;
-
+    font-weight: 500;
+    margin-right: 2px;
 }
 
 .header a:hover{
+    padding: 8px 10px 8px 10px;
     background-color: white;
     color: black;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-weight: 600;
+    border-radius: 8px;
 }
 
 .pages{
+    /* width: 50%; */
+    display: inline;
+    justify-content: space-around;
     margin-left: auto;
 }
