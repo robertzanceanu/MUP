@@ -120,6 +120,8 @@ html, body {
     border: 2px solid darkgrey;
     text-align: center;
     font-weight: 600;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
     /* margin-top: 30px; */
 }
 .button-div:hover{
@@ -323,10 +325,11 @@ input, label{
     justify-content: space-between;
     z-index: 10;
     padding: 5px 10px 5px 10px;
-    background-color: rgb(209, 109, 126);
+    background-color: #8B0000;
     text-align: left;
     border-radius: 6px;
     position: fixed;
+    width: auto;
     -webkit-animation-name: errCard;
     -webkit-animation-duration: 3s;
     animation-name: errCard;
@@ -367,13 +370,15 @@ input, label{
     align-self: flex-end;
 }
 .action-button {
-    width:170px;
-    height: 50px;
+    
     border-radius: 8px;
     border: none;
     color: white;
     padding: 16px 20px;
     opacity: 0.7;
+    margin-bottom: 4%;
+    font-weight: 600;
+
 }
 .start-button {
     background: #2E8B57;
@@ -383,6 +388,7 @@ input, label{
 }
 .action-button:hover{
     opacity: 1;
+
 }
 .page-flex {
     display:flex;
@@ -421,7 +427,9 @@ input, label{
 .header a{
     color:white;
     font-weight: 500;
-    margin-right: 2px;
+    margin-right: 3px;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
 }
 
 .header a:hover{
@@ -435,8 +443,15 @@ input, label{
 }
 
 .pages{
-    /* width: 50%; */
     display: inline;
-    justify-content: space-around;
     margin-left: auto;
 }
+
+@media only screen and (max-width: 414px) {
+    .header a{
+        width: 30px;
+        height: 30px;
+        
+        padding:10px 5px 10px 5px
+    }
+      }
