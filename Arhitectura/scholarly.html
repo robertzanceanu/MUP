@@ -154,7 +154,7 @@
         <p>Aplicatia dispune de un API host-at la adresa <a href="http://192.168.43.156:3000/api">http://192.168.43.156:3000/api</a>. Cu ajutorul acestuia se realizeaza toate request-urile facute. API-ul conduce fiecare cerere catre servere de unde preia informatii si le afiseaza utilizatorului.</p>
         
         <h2>Etapa IV:Interconectarea serverului cu BD</h2>
-        <p>Conectarea serverului de back-end cu baza de date s-a efectuat cu ajutorul unor modele trimise catre schema bazei de date. Acestea contin toate datele inregistrate. Conectarea se realizeaza prin pachetul <i>mongoose</i></p>
+        <p>Conectarea serverului de back-end cu baza de date s-a efectuat cu ajutorul unor modele trimise catre schema bazei de date. Acestea contin toate datele inregistrate. Conectarea se realizeaza prin pachetul <i>mongoose</i>.</p>
         <h4>aici prtsc la modele si pachetul mongoose</h4>
 
         <h2>Etapa V:Interconectarea server-ului cu API-urile</h2>
@@ -181,19 +181,18 @@
         
         <h4>Algoritmul de recomandare</h4>
         <p>Algoritmul de recomandare/automatizare a alegerii pieselor muzicale se bazeaza in prima faza pe cel mai comun gen muzical,urmat de cel mai comun artist, introduse de catre petrecareti. Ulterior, se monitorizeaza miscarile participantilor la petrecere: daca majoritatea dintre acestia danseaza, atunci se recomanda o piesa din acelasi gen, altfel se trece la urmatorul gen preferat de catre participanti. Recomandarea urmatoarei piese din acelasi gen se realizeaza prin apelarea API-ului <i>Spotify</i> care trimite ca raspuns o piesa din acelasi gen. Piesele care au rulat deja la petrecere sunt salvate intr-un obiect de tip array pentru a avea siguranta ca nu se va repeta aceeasi piesa.</p>
-        
-        <h4>Statistici</h4>
-        <p>Pentru fiecare tip de utilizator, exista sectiunea de statistici care prezinta statistici individuale sau globale.</p>
-
-        <h4>Vizualizarea contului</h4>
-        <p>De asemenea, utilizatorii pot vizualiza date despre conturile lor introduse la inregistrare si din aceeasi sectiune au posibilitatea de delogare.</p>
 
         <h2>Testarea aplicatiei</h2>
         <p>Testarea aplicatiei s-a realizat initial in browser, pe gazda localhost a serverelor. Dupa implementarea metodei de monitorizare a miscarilor, a fost necesara testarea remote de pe un dispozitiv cu giroscop(telefon mobil). Pentru aceasta a fost necesara rootarea aplicatiei pe o adresa IP(mentionata in link-ul API-ului) si utilizarea <i>USB Debugging</i>.</p>
     </section>
 
     <section>
-
+        <h3>Despre Spotify</h3>
+        <p>Pentru utilizarea API-ului <i>Spotify</i> este necesara crearea unui cont de dezvoltator. Pe baza acestui cont, se obtin <i>Client ID</i> si <i>Secret Key</i> care trimit un <i>Access token</i> ce serveste la accesarea <i>Spotify Web API endpoints</i>. Pentru a dispune de metodele API-ului, este necesara instalarea <i>spotify-web-api-node</i> cu ajutorul comenzii "npm install spotify-web-api-node --save".</p>
+        <p>Metodele folosite din pachetul spotify-web-api-node sunt doar cele relevante pentru aceasta aplicatie: <i>searchArtist</i>,<i>searchTracks</i>,<i>getRecommandations</i> etc.. </p>
+        <p>Sursele Spotify:</p>
+        <p><a href="https://developer.spotify.com/documentation/general/guides/authorization-guide/?fbclid=IwAR2b1BO6XCLSTqJzgSt_zXTk8Id2zYd0xv3sLSbCC0PB9TlTj1-Svrf2u6o#client-credentials-flow">Validarea credentialelor de dezvoltator</a>-documentatie oficiala</p>
+        <p><a href="https://github.com/thelinmichael/spotify-web-api-node?fbclid=IwAR16yK_j0g1ktZiVFF0zDw7oB5N0-ir7Aq4_tlKIYrcJ6irBNMteMhrRH8o#authorization">Exemple de apelare a metodelor</a>-documentatie oficiala</p>
     </section>
 </body>
 
