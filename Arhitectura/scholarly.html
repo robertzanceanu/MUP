@@ -113,10 +113,12 @@
             </li>
         </ul>
     </section>
+
     <section typeof="sa:management" id="management" role="doc-management">
         <h2>Management-ul codului-sursa</h2>
-        <p>Codul-sursa va fi stocat pe platforma Github, la link-ul <a href="https://github.com/robertzanceanu/MUP">https://github.com/robertzanceanu/MUP</a>. Imediat dupa incheierea unui task, fiecare contribuitor al proiectului va face commit la ceea ce a lucrat.</p>
+        <p>Codul-sursa este stocat pe platforma Github, la link-ul <a href="https://github.com/robertzanceanu/MUP">https://github.com/robertzanceanu/MUP</a>. Imediat dupa incheierea unui task, fiecare contribuitor al proiectului va face commit la ceea ce a lucrat pe branch-ul personal, iar la acordul tuturor membrilor echipei, se face merge catre branch-ul principal(master).</p>
     </section>
+
     <section typeof="sa:API" id="API" role="doc-API">
         <h2>Modelarea datelor proprii</h2>
         <p>Datele introduse de catre utilizator in formularele din aplicatie, vor fi transmise printr-un POST, catre server.</p>
@@ -125,14 +127,73 @@
         <p>Serverul de Node.js combinat cu framework-ul Express se va conecta cu baza de date MongoDB pentru a putea realiza aceste interactiuni.</p>
         <p>Vom folosi API-ul oferit de Spotify pentru a avea la dispozitie toate melodiile si genurile muzicale pe care acesta le ofera. In momentul in care clientul alege un gen sau cauta o melodie, noi vom face un GET pe ruta de search oferita de Spotify si vom selecta informatii despre gen, melodie, artist, pe care le vom introduce in baza de date. De asemenea, tot prin Spotify vom reda si muzica de la petrecere.</p>
         <p>Datele oferite de API-ul Gyroscope ne vor ajuta sa aflam daca petrecaretii danseaza sau nu pe o anumita melodie, iar in caz ca vor dansa, vom transmite catre baza de date prin server aceasta informatie. Astfel, printr-un algoritm, vom putea stabili urmatoarele 10 melodii care vor fi redate. Acestea se vor schimba de la o piesa la alta in functie de numarul persoanelor care danseaza.</p>
-        <p>Aplicatia va fi structurata intr-un MVC (model view controller), in care fisierul de modele va contine schemele bazei de date, cel de view partea de client, iar controllerele partea de server.</p>
     </section>
+
     <section>
-        <h2>Stocare la nivel de client/server</h2>
-        <p>
-            Solutia de stocare aleasa pentru acest proiect este MongoDB datorita usurintei de folosire a acestuia si a complementarii cu Node.js. 
-            Pe adresa de Github mentionata mai sus se poate gasi o diagrama UML reprezentand schema bazei de date a proiectului.
-        </p>
+        <h2>Etapa I:Crearea bazei de date</h2>
+        <p>Solutia de stocare a datelor pentru acest proiect este MongoDB datorita complementarii cu Node.Js.</p>
+        <p>Mai jos se poate observa structura bazei de date:</p>
+        <h4>Aici prtsc cu baza de date</h4>
+
+        <h2>Etapa II:Crearea serverelor</h2>
+        <h4>Severul de front-end</h4>
+        <p>Intrucat solutia aplicatiei este de tip Single Page Application, a fost necesara crearea unui server de frontend. Pagina <i>index.html</i> constituie baza aplicatiei, iar in momentul in care o cerere la o anumita pagina este primit, serverul trimite continutul paginii respective la pagina principala(index.html). Acest lucru se realizeaza cu ajutorul rootarii paginilor.</p>
+        <p>Serverul a fost creat cu ajutorul WebPack care ofera performante prin eliminarea componentelor inutile sau neutilizate, prin usurinta cu care trimite fisierele de stilizare si resursele catre pagina, prin modul de a controla preprocesarea resurselor si stabilitatea productiei.</p>
+        <h3>cod</h3>
+        <h4>Serverul de back-end</h4>
+        <p>Al doilea server al aplicatiei reprezinta serverul de back-end. Pentru acesta, s-a folosit framework-ul <i>Express</i> datorita flexibilitatii, scalabititatii, a inaltei performante si a beneficierii de Full-Stack. Pe acest server are loc prelucrarea datelor si functionalitatea aplicatiei.</p>
+        
+        <h2>Etapa III:Implementarea interfetei Web</h2>
+        <p>Interfata cu utilizatorul este una prietenoasa, usor de utilizat cu elemente vizuale moderne; este simpla si ofera o cale clara utilizatorului catre functionalitatile aplicatiei, atat pentru petrecaret cat si pentru organizatorul petrecerii.</p>
+        <p>Aici se pot observa cateva imagini ale interfetei:</p>
+        <h4>Prtsc-uri cu paginile</h4>
+        <p>Dupa cum am prezentat mai sus, interfata cu utilizatorul este rootata de pe serverul de front-end prin request-uri. Aceste request-uri sunt facute prin metodele HTTP bine cunoscute(GET, POST,PUT).</p>
+        <p>Interfata Web a fost creata conform standardelor HTML5 si CSS3.</p>
+        
+        <h2>Etapa IV:Interconectarea serverelor</h2>
+        <p>Aplicatia dispune de un API host-at la adresa <a href="http://192.168.43.156:3000/api">http://192.168.43.156:3000/api</a>. Cu ajutorul acestuia se realizeaza toate request-urile facute. API-ul conduce fiecare cerere catre servere de unde preia informatii si le afiseaza utilizatorului.</p>
+        
+        <h2>Etapa IV:Interconectarea serverului cu BD</h2>
+        <p>Conectarea serverului de back-end cu baza de date s-a efectuat cu ajutorul unor modele trimise catre schema bazei de date. Acestea contin toate datele inregistrate. Conectarea se realizeaza prin pachetul <i>mongoose</i></p>
+        <h4>aici prtsc la modele si pachetul mongoose</h4>
+
+        <h2>Etapa V:Interconectarea server-ului cu API-urile</h2>
+        <h4>Gyroscope</h4>
+        <p>Conectarea API-ului Gyroscope cu serverul de front-end s-a realizat prin clasa Gyroscope din JS. De asemenea, pentru ca utilizatorul sa poata accesa giroscopul dispozitivului, trebuie sa accepte permisiunile necesare care se realizeaza prin <i>Permissions API</i>(conform documentatiei).</p>
+        <h4>Spotify</h4>
+        <p>Pentru a accesa API-ul Spotify, a fost necesara creerea unui cont de dezvoltator. Pentru a dispune de anumite functionalitati din API, contul de dezvoltator dispune de un <i>client ID</i> si <i>client secret</i> cu care se apeleaza o metoda POST de validare a datelor; raspunsul metodei serveste la apelarea metodei GET pentru a dispune de date ale aplicatiei Spotify(piese muzicale, genuri, artisti, topuri etc.).</p>
+        
+        <h2>Etapa VI:Implementarea cerintelor</h2>
+        <h4>Autentificare/Inregistrare</h4>
+        <p>In prima faza, pentru a accesa aplicatia, un utilizator trebuie sa creeze un cont. La inregistrarea contului, utilizatorul trebuie sa introduca numele, prenumele, adresa de e-mail si este indrumat sa isi aleaga rolul pentru a beneficia de anumite functionalitati. Rolurile sunt <i>petrecaret</i> si <i>organizator de petrecere</i>. De asemenea, utilizatorul trebuie sa introduca o parola si sa confirme parola. Datele de inregistrare sunt transmise catre baza de date cu ajutorul metodei POST, iar parola este stocata printr-o functie hash.</p>
+        <p>Dupa inregistrare si la urmatoarele accesari ale aplicatiei, utilizatorul trebuie sa se autentifice. Acest lucru se realizeaza prin introducerea adresei de e-mail si a parolei. Acestea sunt trimise catre back-end si verificate cu ajutorul bazei de date.</p>
+        <p>In functie de rol, fiecare utilizator este indrumat catre o pagina numita <i>Acasa</i>. Aici, in functie de rol, utilizatorul dispunde de urmatoarele functionalitati:</p>
+        
+        <h5>Organizator de petrecere</h5>
+        <p>Un organizator de petrecere poate vizualiza pe pagina <i>Acasa</i> toate petrecerile create de el insusi si statusul acestora(In asteptare, live, closed). Acest lucru este posibil cu ajutorul metodei GET apelata din server-ul de front-end care face apel la server-ul de back-end cu ajutorul unui <i>userID</i> pe care il trimite catre baza de date de unde preia toate petrecerile create de catre utilizator, daca acestea exista.</p>
+        <p>De asemenea, pe pagina <i>Acasa</i> exista un buton de creare a unei petreceri. Acesta deschide un pop-up cu un formular in care se cere introducerea numelui petrecerii si durata acesteia. Acestea vor fi trimise de la server-ul de front-end catre back-end pentru a fi introduse in baza de date. </p>
+        <p>La accesarea unui card al unei petreceri, utilizatorul este redirectionat catre o pagina care contine detaliile petrecerii; organizatorul are posibilitatea de a incepe petrecerea cu ajutorul butonului "Porneste petrecerea". In momentul in care acesta apasa butonul, statusul petrecerii se schimba in <i>live</i>, semn ca petrecerea a inceput si butonul se schimba in "Opreste petrecerea" care va incheia petrecerea si o va pune in statusul <i>closed</i>. Daca organizatorul nu incheie petrecerea, aceasta se va incheia automat la terminarea duratei de la momentul in care a inceput petrecerea pana la terminarea duratei pe care a introdus-o la crearea petrecerii.</p>
+    
+        <h5>Petrecaret</h5>
+        <p>In momentul in care petrecaretul intra pe pagina <i>Acasa</i>, acesta poate vedea toate petrecerile care sunt live. Pentru a intra in petrecere, acesta apasa pe cardul petrecerii si se deschide un pop-up pentru a introduce codul petrecerii, artistul preferat, piesa preferata si genul preferat. La apasarea butonului "Intra in petrecere", datele introduse sunt trimise catre baza de date.</p>
+        <p>Daca utilizatorul a intrat deja in petrecere, la momentul accesarii cardului se va deschide pagina cu detaliile petrecerii, piesa redata la momentul respectiv si detalii despre miscarile acestuia.</p>
+        <p>Detaliile despre miscari sunt afisate cu ajutorul API-ului <i>Gyroscope</i> care trimite serverului de front-end coordonatele x, y si z ale dispozitivului. Aceste date sunt prelucrate in back-end si constituie o parte importanta in algoritmul de recomandare a pieselor muzicale intr-o petrecere.</p>    
+        
+        <h4>Algoritmul de recomandare</h4>
+        <p>Algoritmul de recomandare/automatizare a alegerii pieselor muzicale se bazeaza in prima faza pe cel mai comun gen muzical,urmat de cel mai comun artist, introduse de catre petrecareti. Ulterior, se monitorizeaza miscarile participantilor la petrecere: daca majoritatea dintre acestia danseaza, atunci se recomanda o piesa din acelasi gen, altfel se trece la urmatorul gen preferat de catre participanti. Recomandarea urmatoarei piese din acelasi gen se realizeaza prin apelarea API-ului <i>Spotify</i> care trimite ca raspuns o piesa din acelasi gen. Piesele care au rulat deja la petrecere sunt salvate intr-un obiect de tip array pentru a avea siguranta ca nu se va repeta aceeasi piesa.</p>
+        
+        <h4>Statistici</h4>
+        <p>Pentru fiecare tip de utilizator, exista sectiunea de statistici care prezinta statistici individuale sau globale.</p>
+
+        <h4>Vizualizarea contului</h4>
+        <p>De asemenea, utilizatorii pot vizualiza date despre conturile lor introduse la inregistrare si din aceeasi sectiune au posibilitatea de delogare.</p>
+
+        <h2>Testarea aplicatiei</h2>
+        <p>Testarea aplicatiei s-a realizat initial in browser, pe gazda localhost a serverelor. Dupa implementarea metodei de monitorizare a miscarilor, a fost necesara testarea remote de pe un dispozitiv cu giroscop(telefon mobil). Pentru aceasta a fost necesara rootarea aplicatiei pe o adresa IP(mentionata in link-ul API-ului) si utilizarea <i>USB Debugging</i>.</p>
+    </section>
+
+    <section>
+
     </section>
 </body>
 
