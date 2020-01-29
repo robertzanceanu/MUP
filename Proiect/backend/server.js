@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const authRoute = require('./routes/auth')
 const postRoute = require('./routes/posts')
 const partiesRoute = require('./routes/parties')
+const {initSpotify, getRecommandations} = require('./global-functions/spotify')
 
 var cors = require('cors')
 
@@ -20,5 +21,6 @@ app.use(express.json())
 app.use('/api/user', authRoute)
 app.use('/api/posts',postRoute)
 app.use('/api/parties',partiesRoute)
+
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}`))

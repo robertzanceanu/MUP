@@ -5,6 +5,8 @@ const { addPartyValidation } = require('../validation')
 const Party = require('../model/partyModel')
 const OpenParties = require('../model/openPartyModel')
 const User = require('../model/userModel')
+let {initSpotify, getRecommandations} = require('../global-functions/spotify')
+let spotifyApi = initSpotify()
 
 router.get('/getParties/:id', verify, async(req,res) => {
     try {
@@ -14,7 +16,30 @@ router.get('/getParties/:id', verify, async(req,res) => {
             res.send({
                 parties
             })
-        } 
+        } else {
+            const parties = await Party.find({status: 'live'})
+            const partiesWithoutCode = []
+            const inParty = await OpenParties.findOne({userId:req.params.id})
+            console.log('aaaa', inParty)
+            parties.forEach(async(party,index) => {
+                console.log(party)
+                let found = false
+                if(inParty) {
+                    if(inParty.partyId === party.id) {
+                        found = true
+                    }
+                }
+                partiesWithoutCode.push({
+                    _id:party.id,
+                    name:party.name,
+                    status:party.status,
+                    inParty: found
+                })
+            })
+            res.send({
+                parties:partiesWithoutCode
+            })
+        }
     } catch(err) {
         res.status(400).send({
             error: {
@@ -90,11 +115,10 @@ router.get('/getParty/:id', verify, async (req, res) => {
 router.get('/getLiveParty/statistics/:id', verify, async(req,res) => {
     try {
         const party =await OpenParties.find({partyId: req.params.id})
-        console.log(party.length)
         let statistics = {
             numberOfPlayers: party.length
         }
-        res.send({statistics})
+        res.send({...statistics})
     } catch(err) {
         res.status(400).send({
             error: {
@@ -104,7 +128,25 @@ router.get('/getLiveParty/statistics/:id', verify, async(req,res) => {
         })
     }
 })
-router.post('/openParty/:id', verify, async (req, res) => {
+router.get('/getLiveParty/nowPlaying/:id', verify, async(req,res) => {
+    try {
+        const party =await OpenParties.find({partyId: req.params.id})
+        // console.log(party.length)
+        // let statistics = {
+        //     numberOfPlayers: party.length
+        // }
+        let nowPlaying = party[0].nowPlaying
+        res.send({nowPlaying:nowPlaying})
+    } catch(err) {
+        res.status(400).send({
+            error: {
+                message: 'Petrecerea nu este live',
+                status:400
+            }
+        })
+    }
+})
+router.post('/joinParty/:id', verify, async (req, res) => {
     const party = await Party.findOne({ _id: req.params.id })
     if (party.partyCode !== req.body.partyCode)
         return res.status(400).send({
@@ -124,9 +166,9 @@ router.post('/openParty/:id', verify, async (req, res) => {
     const addToOpenParty = new OpenParties({
         partyId: req.params.id,
         userId: req.body.userId,
-        favArtist: 'none',
-        favSong: 'none',
-        favGenre: 'none',
+        favArtist: req.body.favArtist,
+        favSong: req.body.favSong,
+        favGenre: req.body.favGenre,
         isDancing: 0,
         nowPlaying: 'none'
     })
@@ -184,23 +226,44 @@ router.get('/userOpenParty/:id', verify, async (req, res) => {
         })
     }
 })
-router.put('/userOpenParty/:id', verify, async (req, res) => {
-    const userOpenParty = await OpenParties.findOne({
-        _id: req.params.id
-    })
-    userOpenParty.favArtist= req.body.favArtist
-    userOpenParty.favSong= req.body.favSong
-    userOpenParty.favGenre= req.body.favGenre
+// router.put('/userOpenParty/:id', verify, async (req, res) => {
+//     const userOpenParty = await OpenParties.findOne({
+//         _id: req.params.id
+//     })
+//     userOpenParty.favArtist= req.body.favArtist
+//     userOpenParty.favSong= req.body.favSong
+//     userOpenParty.favGenre= req.body.favGenre
+//     try {
+//         const savedUserOpenParty = await userOpenParty.save()
+//         res.send(savedUserOpenParty)
+//     } catch (err) {
+//         res.status(400).send({
+//             error: {
+//                 message: err,
+//                 status: 400
+//             }
+//         })
+//     }
+// })
+
+router.put('/openParty/modifyDancing/:id', verify, async (req,res) => {
+    let openParty = await OpenParties.findOne({partyId:req.params.id, userId:req.body.userId})
+    openParty.isDancing = req.body.isDancing
     try {
-        const savedUserOpenParty = await userOpenParty.save()
-        res.send(savedUserOpenParty)
-    } catch (err) {
+        const openPartyUpdated = await openParty.save()
+        res.send(openPartyUpdated)
+    } catch(err) {
         res.status(400).send({
             error: {
-                message: err,
-                status: 400
+                message:err,
+                status:400
             }
         })
     }
+})
+router.get('/getNextSong/:id', verify, async(req, res) => {
+    let liveParty = await OpenParties.find({partyId:req.params.id})
+    console.log(liveParty)
+    res.send(liveParty)
 })
 module.exports = router
