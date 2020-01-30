@@ -65,14 +65,16 @@ let PartyViewOrganizer = {
         `
     },
     after_render: async (startParty, getParty,getFirstSong) => {
-        document.getElementById('start').addEventListener('click', async ()=> {
-            await startParty()
-            // await getParty()
-            window.location.reload(true)
-        })
+        if(document.getElementById('start')) {
+            document.getElementById('start').addEventListener('click', async ()=> {
+                await startParty()
+                // await getParty()
+                window.location.reload(true)
+            })
+        }
         document.getElementById('playFirstSong').addEventListener('click', async() => {
+            console.log('aici da')
             await getFirstSong()
-            window.location.reload(true)
         })
     } 
 }

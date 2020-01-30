@@ -239,14 +239,14 @@ let Home = {
 
                 if(fetchRresponse.error) {
                     let node = document.createElement('div')
-                    node.innerHTML = showError(response.error.status, response.error.message)
+                    node.innerHTML = showError(fetchRresponse.error.status, fetchRresponse.error.message)
                     document.getElementById('page').appendChild(node)
                     setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
                 }
                 else {
+                    document.getElementById("blurForm").style.display = "none";
+                    document.getElementById("myForm").style.display = "none";
                     if (document.getElementById("myForm").getAttribute('data-index')) {
-                        document.getElementById("blurForm").style.display = "none";
-                        document.getElementById("myForm").style.display = "none";
                         document.getElementById("myForm").removeAttribute('data-index')
                         document.getElementById('myForm').getElementsByClassName('form-popup-title')[0].innerHTML="Alatura-te unei petreceri:"
                     }
