@@ -110,6 +110,7 @@ const detectMotion = async(motionArray) => {
     }
 }
 const getFirstSong = async() => {
+    console.log('intra in first song')
     let partyId = location.pathname.split('/')[2]
     try {
         const response = await fetch(`${API_URL}/parties/playFirstSong/${partyId}`, {
@@ -121,6 +122,7 @@ const getFirstSong = async() => {
             }
         })
         const json = await response.json()
+        // window.location.reload(true)
         return json
     } catch (err) {
         console.log(err)
