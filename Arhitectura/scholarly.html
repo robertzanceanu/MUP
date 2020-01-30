@@ -133,20 +133,23 @@
         <h2>Etapa I:Crearea bazei de date</h2>
         <p>Solutia de stocare a datelor pentru acest proiect este MongoDB datorita complementarii cu Node.Js.</p>
         <p>Mai jos se poate observa structura bazei de date:</p>
-        <h4>Aici prtsc cu baza de date</h4>
+        <img src="images/bd1.png" height="30%" width="50%"><img src="images/bd2.png" height="30%" width="50%">
+        <img src="images/bd3.png" height="30%" width="50%">
 
         <h2>Etapa II:Crearea serverelor</h2>
         <h4>Severul de front-end</h4>
         <p>Intrucat solutia aplicatiei este de tip Single Page Application, a fost necesara crearea unui server de frontend. Pagina <i>index.html</i> constituie baza aplicatiei, iar in momentul in care o cerere la o anumita pagina este primit, serverul trimite continutul paginii respective la pagina principala(index.html). Acest lucru se realizeaza cu ajutorul rootarii paginilor.</p>
         <p>Serverul a fost creat cu ajutorul WebPack care ofera performante prin eliminarea componentelor inutile sau neutilizate, prin usurinta cu care trimite fisierele de stilizare si resursele catre pagina, prin modul de a controla preprocesarea resurselor si stabilitatea productiei.</p>
-        <h3>cod</h3>
+
         <h4>Serverul de back-end</h4>
         <p>Al doilea server al aplicatiei reprezinta serverul de back-end. Pentru acesta, s-a folosit framework-ul <i>Express</i> datorita flexibilitatii, scalabititatii, a inaltei performante si a beneficierii de Full-Stack. Pe acest server are loc prelucrarea datelor si functionalitatea aplicatiei.</p>
         
         <h2>Etapa III:Implementarea interfetei Web</h2>
         <p>Interfata cu utilizatorul este una prietenoasa, usor de utilizat cu elemente vizuale moderne; este simpla si ofera o cale clara utilizatorului catre functionalitatile aplicatiei, atat pentru petrecaret cat si pentru organizatorul petrecerii.</p>
         <p>Aici se pot observa cateva imagini ale interfetei:</p>
-        <h4>Prtsc-uri cu paginile</h4>
+        <img src="images/login.PNG" height="30%" width="50%"><img src="images/form_enter_party.PNG" height="30%" width="50%">
+        <img src="images/form_new_party.PNG" height="30%" width="50%"><img src="images/acasa_org.PNG" height="30%" width="50%">
+        
         <p>Dupa cum am prezentat mai sus, interfata cu utilizatorul este rootata de pe serverul de front-end prin request-uri. Aceste request-uri sunt facute prin metodele HTTP bine cunoscute(GET, POST,PUT).</p>
         <p>Interfata Web a fost creata conform standardelor HTML5 si CSS3.</p>
         
@@ -155,8 +158,8 @@
         
         <h2>Etapa IV:Interconectarea serverului cu BD</h2>
         <p>Conectarea serverului de back-end cu baza de date s-a efectuat cu ajutorul unor modele trimise catre schema bazei de date. Acestea contin toate datele inregistrate. Conectarea se realizeaza prin pachetul <i>mongoose</i>.</p>
-        <h4>aici prtsc la modele si pachetul mongoose</h4>
-
+        <img src="images/modele1.png" heigth="30%" width="50%"><img src="images/modele2.png" height="30%" width="50%">
+ 
         <h2>Etapa V:Interconectarea server-ului cu API-urile</h2>
         <h4>Gyroscope</h4>
         <p>Conectarea API-ului Gyroscope cu serverul de front-end s-a realizat prin clasa Gyroscope din JS. De asemenea, pentru ca utilizatorul sa poata accesa giroscopul dispozitivului, trebuie sa accepte permisiunile necesare care se realizeaza prin <i>Permissions API</i>(conform documentatiei).</p>
