@@ -32,7 +32,7 @@ let PartyViewUser = {
             <div class="card">
                 <div class="card-title">Detalii miscare</div>
                 <div class="card-info" id="locationInfo">
-                    <div class="x">1</div>
+                    <div class="x">-</div>
                 </div>
             </div>
         </div>
@@ -40,7 +40,6 @@ let PartyViewUser = {
         `
     },
     after_render: async (detectMotion) => {
-        document.getElementsByClassName('x')[0].innerHTML = `2`
         console.log('poate vrea a mearga')
         let gyroscope = new Gyroscope({ frequency: 1 })
         let motionArray = []

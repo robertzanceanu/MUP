@@ -8,18 +8,17 @@ const initSpotify = () => {
       });
     return spotifyApi
 }
-const getRecommandations = (spotifyApi) => {
-    spotifyApi.clientCredentialsGrant().then(
-        function(data) {
-          console.log('The access token expires in ' + data.body['expires_in']);
-          console.log('The access token is ' + data.body['access_token']);
-      
+const getRecommandations = async (spotifyApi,genre) => {
+    return spotifyApi.clientCredentialsGrant().then(
+        async function(data) {
           // Save the access token so that it's used in future calls
           spotifyApi.setAccessToken(data.body['access_token']);
-          console.log('aaaaaaa',spotifyApi.getAccessToken())
-          spotifyApi.searchTracks('genre:Pop').then(
+          // console.log('aaaaaaa',spotifyApi.getAccessToken())
+          return spotifyApi.searchTracks(`genre:${genre}`).then(
             function(data) {
-              console.log(data.body.tracks.items)
+              // console.log(data.body.tracks.items)
+              // console.log(genre, data.body)
+              return data.body.tracks.items
             },
             function(err) {
               console.log('something went wrong')

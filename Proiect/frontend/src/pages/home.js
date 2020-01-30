@@ -119,7 +119,7 @@ let Home = {
                                 `href="/party/${party._id}"` 
                                 :
                                 party.inParty ?
-                                    `href="/party/${party._id}"`
+                                    `href="/party/${party._id}" data-party-index=${index}`
                                     : 
                                     `id="openPopupFromCard" data-party-index=${index}`}>
                             <div class="party">
@@ -173,20 +173,24 @@ let Home = {
         document.getElementById('closeForm').addEventListener('click', () => {
             document.getElementById("myForm").style.display = "none";
             if (document.getElementById("myForm").getAttribute('data-index')) {
-                console.log('daaaaas')
                 document.getElementById("myForm").removeAttribute('data-index')
                 document.getElementById('myForm').getElementsByClassName('form-popup-title')[0].innerHTML="Alatura-te unei petreceri:"
             }
             document.getElementById("blurForm").style.display = "none";
         })
         let partiesHTML = document.querySelectorAll('[data-party-index]')
+        console.log(partiesHTML)
         partiesHTML.forEach((party,index) => {
-            party.addEventListener('click', async() => {
-                document.getElementById("myForm").style.display = "block";
-                document.getElementById("myForm").setAttribute('data-index',`${index}`);
-                document.getElementById('myForm').getElementsByClassName('form-popup-title')[0].innerHTML=`Alatura-te petrecerii ${response.parties[index].name}`
-                document.getElementById("blurForm").style.display = "block";
-            })
+            console.log(index,party.href)
+            if(!party.href) {
+                party.addEventListener('click', async() => {
+                    document.getElementById("myForm").style.display = "block";
+                    document.getElementById("myForm").setAttribute('data-index',`${index}`);
+                    document.getElementById('myForm').getElementsByClassName('form-popup-title')[0].innerHTML=`Alatura-te petrecerii ${response.parties[index].name}`
+                    document.getElementById("blurForm").style.display = "block";
+                })
+            }
+            
         })
         if(user.role === 'partyOrganizer') {
             document.getElementById('submitCreatePartyForm').addEventListener('click', async(e) => {
@@ -235,14 +239,18 @@ let Home = {
 
                 if(fetchRresponse.error) {
                     let node = document.createElement('div')
-                    node.innerHTML = showError(response.error.status, response.error.message)
+                    node.innerHTML = showError(fetchRresponse.error.status, fetchRresponse.error.message)
                     document.getElementById('page').appendChild(node)
                     setTimeout(function(){document.getElementById('page').removeChild(node)}, 3000);
                 }
                 else {
-                    document.getElementById("myForm").style.display = "none";
                     document.getElementById("blurForm").style.display = "none";
-                    // window.location.reload(true)
+                    document.getElementById("myForm").style.display = "none";
+                    if (document.getElementById("myForm").getAttribute('data-index')) {
+                        document.getElementById("myForm").removeAttribute('data-index')
+                        document.getElementById('myForm').getElementsByClassName('form-popup-title')[0].innerHTML="Alatura-te unei petreceri:"
+                    }
+                    window.location.reload(true)
                 }
             })
         }

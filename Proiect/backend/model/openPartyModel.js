@@ -27,6 +27,9 @@ const openPartiesSchema = new mongoose.Schema({
     },
     nowPlaying: {
         type:String
+    },
+    nowGenre: {
+        type:String
     }
 })
 
