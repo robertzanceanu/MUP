@@ -1,9 +1,9 @@
 import { API_URL } from '../constants'
+import { USER_DETAILS, AUTH_TOKEN } from '../shared/user'
 
-const getParty = async () => {
-    let partyId = location.pathname.split('/')[2]
+const getTopGenres = async () => {
     try {
-        const response = await fetch(`${API_URL}/parties/getParty/${partyId}`, {
+        const response = await fetch(`${API_URL}/stats/getPartiesGenres`, {
             method: 'get',
             headers: {
                 'Accept': 'aplication/json',
@@ -20,7 +20,15 @@ const getParty = async () => {
 
 let Statistics = {
     render: async () => {
+        let userDetails = { ...USER_DETAILS }
+        let partygenres = {}
+        if(userDetails.role === 'partyOrganizer' && (partyDetails.status === 'live' || partyDetails.status === 'closed')) {
+            partygenres = await getTopGenres()
+            console.info(partygenres);
+        }
         return `
+            <div>${partygenres.fav1},${partygenres.fav2},${partygenres.fav3}</div>
+                
         
         `
     },
