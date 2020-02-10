@@ -3,6 +3,17 @@ import PartyViewUser from './partyViewUser'
 import { USER_DETAILS, AUTH_TOKEN } from '../../shared/user'
 import { API_URL } from '../../constants'
 
+const io=require("socket.io-client")
+const ioClient=io.connect("http://localhost:8000");
+
+ioClient.on("new",(message)=>{
+    PartyViewOrganizer();
+})
+
+ioClient.on("newsong",(message)=>{
+    PartyViewUser();
+})
+
 const getParty = async () => {
     let partyId = location.pathname.split('/')[2]
     try {
@@ -131,6 +142,7 @@ const getFirstSong = async() => {
 const getNextSong = async() => {
     let partyId = location.pathname.split('/')[2]
     try {
+        ioClient.emit("newsong",'newsong');
         const response = await fetch(`${API_URL}/parties/getNextSong/${partyId}`, {
             method: 'get',
             headers: {

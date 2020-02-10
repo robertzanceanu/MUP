@@ -1,3 +1,5 @@
+import { client } from "websocket";
+
 let joinPartyForm = {
     render: async () => {
         return `
@@ -19,6 +21,9 @@ let joinPartyForm = {
                 
                 <button type="submit" class="btn" id="submitJoinPartyForm">Alatura-te petrecerii!</button>
                 <button type="button" class="btn cancel" id="closeForm">Close</button>
+            
+              
+
             </div>
         </div>
         `

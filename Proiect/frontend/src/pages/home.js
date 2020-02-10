@@ -4,6 +4,21 @@ import Unauthorized from './unauthorized401'
 import addPartyForm from '../components/addPartyForm'
 import joinPartyForm from '../components/joinPartyForm'
 
+const io=require("socket.io-client")
+const ioClient=io.connect("http://localhost:8000");
+
+
+
+// ioClient.emit("semnal",'semnal');
+// console.info("am trimis semnalul");
+
+//var timer=setInterval(sendSignal,1000);
+
+// function sendSignal(){
+//     ioClient.emit("semnal",'semnal')
+// }
+
+
 const submitCreateParty = async (data) => {
     try {
         const response = await fetch(`${API_URL}/parties/addParty`, {
@@ -36,6 +51,7 @@ const joinParty = async (partyId, data) => {
         })
 
         const json = await response.json()
+        ioClient.emit("semnal",'semnal');
         return json
     } catch(err) {
         console.log(err)

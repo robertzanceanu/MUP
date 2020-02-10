@@ -3,7 +3,7 @@ const User = require('../model/userModel')
 const bcrypt = require('bcryptjs')
 const { registerValidation, loginValidation } = require('../validation')
 const jwt = require('jsonwebtoken')
-
+const websocketserver=require('../websockets')
 
 
 /**

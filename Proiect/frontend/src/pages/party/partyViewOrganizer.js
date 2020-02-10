@@ -1,5 +1,11 @@
+
 let PartyViewOrganizer = {
+
     render: async (userDetails, partyDetails, statistics, nowPlaying) => {
+        // const ws=new WebSocket.Server({noServer:true});
+        // ws.on('message',function incoming(message){
+        //     console.log('received: %s',message);
+        // });
         return`
         <div class="wrapper">
             <div class="page-button">
@@ -46,7 +52,7 @@ let PartyViewOrganizer = {
                             <div class="card-title">Statistici</div>
                             <div class="card-infos">
                                 <div class="card-info">Numarul de petrecareti:</div>
-                                <div class="card-details">${statistics.numberOfPlayers}</div>
+                                <div class="card-details" id="nr_petrecareti">${statistics.numberOfPlayers}</div>
                             </div>
                         </div>
                     `
@@ -61,10 +67,13 @@ let PartyViewOrganizer = {
                     `
                 }
             </div>
+               
+
         </div>
         `
     },
     after_render: async (startParty, getParty,getFirstSong) => {
+        
         if(document.getElementById('start')) {
             document.getElementById('start').addEventListener('click', async ()=> {
                 await startParty()
@@ -76,6 +85,7 @@ let PartyViewOrganizer = {
             console.log('aici da')
             await getFirstSong()
         })
+
     } 
 }
 export default PartyViewOrganizer

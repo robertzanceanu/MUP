@@ -11,6 +11,7 @@ import Account from './pages/myaccount'
 import Statistics from './pages/statistics'
 
 import ParseRequestUrl from './shared/utils'
+import { client } from 'websocket'
 
 const routes = {
     '/login':Login,
@@ -44,3 +45,43 @@ window.addEventListener('hashchange', () => {
 window.addEventListener('load', () => {
     router()
 })
+
+
+const io=require("socket.io-client")
+const ioClient=io.connect("http://localhost:8000");
+
+
+// ioClient.emit("semnal",'semnal');
+// console.info("am trimis semnalul");
+
+// //var timer=setInterval(sendSignal,1000);
+
+// function sendSignal(){
+//     ioClient.emit("semnal",'semnal')
+// }
+
+// const socket=new WebSocket('ws://localhost:8081');
+
+// socket.addEventListener('open',()=>{
+//     socket.send('Hello!');
+//     console.log('Am trimis spre server');
+// })
+
+// socket.addEventListener('message',event=>{
+//     console.log(`message from server:${event.data}`);
+// })
+
+// window.WebSocket=window.WebSocket;
+
+// var client=new WebSocket("ws://localhost:8081");
+
+// client.onerror=function() {
+//     console.log('Connect Error');
+// };
+
+// client.onopen = function() {
+//     client.send(document.getElementById('partyCode').value);
+//     client.close();
+// };
+
+
