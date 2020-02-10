@@ -25,7 +25,7 @@ app.use(express.json())
 app.use('/api/user', authRoute)
 app.use('/api/posts', postRoute)
 app.use('/api/parties', partiesRoute)
-app.use('/api/statistics',statsRoute)
+app.use('/api/stats',statsRoute)
 
 const swaggerJsDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express');

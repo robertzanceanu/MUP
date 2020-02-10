@@ -22,14 +22,33 @@ let Statistics = {
     render: async () => {
         let userDetails = { ...USER_DETAILS }
         let partygenres = {}
-        if(userDetails.role === 'partyOrganizer' && (partyDetails.status === 'live' || partyDetails.status === 'closed')) {
+        if(userDetails.role === 'partyOrganizer') {
             partygenres = await getTopGenres()
             console.info(partygenres);
         }
         return `
-            <div>${partygenres.fav1},${partygenres.fav2},${partygenres.fav3}</div>
+        <div class="wrapper">
+            <div class="page-flex" id="page">
+                <div class="card">
+                    <div class="card-title">
+                        Topul genurilor preferate
+                    </div>
+                    <div class="card-infos">
+                        <div class="card-info">Numarul 1:</div>
+                        <div class="card-details">${partygenres.fav1}</div>
+                    </div>
+                    <div class="card-infos">
+                        <div class="card-info">Numarul 2:</div>
+                        <div class="card-details">${partygenres.fav2}</div>
+                    </div>
+                    <div class="card-infos">
+                        <div class="card-info">Numarul 3:</div>
+                        <div class="card-details">${partygenres.fav3}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
                 
-        
         `
     },
     after_render: async () => {

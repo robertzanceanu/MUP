@@ -52,10 +52,11 @@ router.get('/getParties/:id', verify, async (req, res) => {
 
 router.get('/getPartiesGenres', verify, async (req, res) => {
     try {
-        let liveParty = OpenParties
-        let genres = {}
+        let liveParty =await OpenParties.find({})
+        let genres = []
         liveParty.map((user, index) => {
             // genres.push()
+            
             if (genres.hasOwnProperty(`${user.favGenre.toLowerCase()}`)) {
                 genres[`${user.favGenre.toLowerCase()}`] = genres[`${user.favGenre.toLowerCase()}`] + 1
             }
@@ -63,44 +64,39 @@ router.get('/getPartiesGenres', verify, async (req, res) => {
                 genres[`${user.favGenre.toLowerCase()}`] = 1
             }
         })
-        console.info(genres)
-        let favGenre = ''
-        let max = 0
-        Object.keys(genres).forEach((item) => {
-            if (genres[item] > max) {
-                max = genres[item]
-                favGenre = item
-            }
-        })
-        console.info(favGenre)
-        Object.keys(genres).pop(favGenre);
-        
-        let favGenre1=''
-        let max1=0
-        Object.keys(genres).forEach((item) => {
-            if (genres[item] > max1) {
-                max1 = genres[item]
-                favGenre1 = item
-            }
-        })
-        console.info(favGenre1)
-        Object.keys(genres).pop(favGenre1);
 
-        let favGenre2=''
-        let max2=0
-        Object.keys(genres).forEach((item) => {
-            if (genres[item] > max2) {
-                max2 = genres[item]
-                favGenre2 = item
-            }
-        })
-        console.info(favGenre2)
-        Object.keys(genres).pop(favGenre2);
-        res.send({
-            fav1:favGenre,
-            fav2:favGenre1,
-            fav3:favGenre2
-        })
+        var sortable = [];
+        for (var gen in genres) {
+            sortable.push([gen, genres[gen]]);
+        }
+
+        sortable.sort(function(a, b) {
+            return a[1] - b[1];
+        });
+        if(sortable.length==0)
+            res.send({
+                fav1:" ",
+                fav2:" ",
+                fav3:" "
+            });
+        else if(sortable.length==1)
+            res.send({
+                fav1:sortable[0][0],
+                fav2:" ",
+                fav3:" "
+            });
+        else if(sortable.length==2)
+            res.send({
+                fav1:sortable[0][0],
+                fav2:sortable[1][0],
+                fav3:" "
+            });
+        else
+            res.send({
+                fav1:sortable[0][0],
+                fav2:sortable[1][0],
+                fav3:sortable[2][0]
+            });
 
     } catch (err) {
         res.status(400).send({
