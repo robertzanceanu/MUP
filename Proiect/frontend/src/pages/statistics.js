@@ -17,6 +17,23 @@ const getTopGenres = async () => {
         console.log(err)
     }
 }
+const getParties = async () => {
+    let user = { ...USER_DETAILS }
+    try {
+        const response = await fetch(`${API_URL}/stats/getParties/${user.id}`, {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'auth-token': `${localStorage.getItem('auth-token')}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        const json = await response.json()
+        return json
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 let Statistics = {
     render: async () => {
@@ -26,6 +43,9 @@ let Statistics = {
             partygenres = await getTopGenres()
             console.info(partygenres);
         }
+
+        let partiesstats=await getParties()
+
         return `
         <div class="wrapper">
             <div class="page-flex" id="page">
@@ -46,6 +66,18 @@ let Statistics = {
                         <div class="card-details">${partygenres.fav3}</div>
                     </div>
                 </div>
+                ${partiesstats.parties.map((party,index)=>{
+                    return `
+                    <div class="card">
+                        <div class="card-infos">
+                            <div class="card-info">${party.name}: </div>
+                            <div class="card-details">${party.nrPeople}</div>
+                        </div>
+                    </div>
+                    `
+                }
+                )}
+
             </div>
         </div>
                 

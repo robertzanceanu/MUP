@@ -13,32 +13,21 @@ router.get('/getParties/:id', verify, async (req, res) => {
     try {
         const user = await User.findOne({ _id: req.params.id })
         if (user.role === 'partyOrganizer') {
-            const parties = await Party.find({ creatorId: req.params.id })
-            res.send({
-                parties
-            })
-        } else {
-            const parties = await Party.find({ status: 'live' })
-            const partiesWithoutCode = []
-            const inParty = await OpenParties.findOne({ userId: req.params.id })
-            parties.forEach(async (party, index) => {
-                let found = false
-                if (inParty) {
-                    if (inParty.partyId === party.id) {
-                        found = true
-                    }
-                }
-                partiesWithoutCode.push({
-                    _id: party.id,
+            const parties = await Party.find({ creatorId:user.id})
+            
+            const statstics=[]
+            parties.forEach(async (party,index)=>{
+                const part=await OpenParties.find({ partyId: party.id})
+                
+                statstics.push({
                     name: party.name,
-                    status: party.status,
-                    inParty: found
-                })
-            })
+                    nrPeople: part.length
+                });
+            });
             res.send({
-                parties: partiesWithoutCode
-            })
-        }
+                parties: statstics
+            });
+        } 
     } catch (err) {
         res.status(400).send({
             error: {
@@ -107,8 +96,6 @@ router.get('/getPartiesGenres', verify, async (req, res) => {
         })
     }
 })
-
-
 
 
 

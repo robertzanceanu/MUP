@@ -11,7 +11,6 @@ import Account from './pages/myaccount'
 import Statistics from './pages/statistics'
 
 import ParseRequestUrl from './shared/utils'
-import { client } from 'websocket'
 
 const routes = {
     '/login':Login,
@@ -47,8 +46,8 @@ window.addEventListener('load', () => {
 })
 
 
-const io=require("socket.io-client")
-const ioClient=io.connect("http://localhost:8000");
+// const io=require("socket.io-client")
+// const ioClient=io.connect("http://localhost:8000");
 
 
 // ioClient.emit("semnal",'semnal');

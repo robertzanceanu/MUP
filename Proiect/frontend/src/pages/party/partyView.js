@@ -188,7 +188,7 @@ let PartyView = {
             await PartyViewOrganizer.after_render(startParty, getParty,getFirstSong)
         }
         else {
-            await PartyViewUser.after_render(detectMotion)
+            await PartyViewUser.after_render(detectMotion,nowPlaying)
             console.log('aaa')
 
         }

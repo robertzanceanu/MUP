@@ -1,4 +1,3 @@
-import { client } from "websocket";
 
 let joinPartyForm = {
     render: async () => {

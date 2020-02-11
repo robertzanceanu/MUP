@@ -1,5 +1,12 @@
 let PartyViewUser = {
     render: async (partyDetails, nowPlaying) => {
+        // const io=require("socket.io-client")
+        // const ioClient=io.connect("http://localhost:8000");
+
+        // ioClient.on("newsong",(message)=>{
+        //     document.getElementById("nowPlaying").innerHTML=`${nowPlaying.nowPlaying}`;
+        //     console.log(message);
+        // })
         return `
         <div class="wrapper">
         <div class="page-flex" id="page">
@@ -25,7 +32,7 @@ let PartyViewUser = {
             `
                     <div class="card">
                         <div class="card-title">Melodia redata acum</div>
-                        <div class="card-info">${nowPlaying.nowPlaying === 'none' ? 'Inca nu este redata nicio melodie' : nowPlaying.nowPlaying}</div>
+                        <div class="card-info" id="nowPlaying">${nowPlaying.nowPlaying === 'none' ? 'Inca nu este redata nicio melodie' : nowPlaying.nowPlaying}</div>
                     </div>
                 `
             }
@@ -39,7 +46,9 @@ let PartyViewUser = {
     </div>
         `
     },
-    after_render: async (detectMotion) => {
+    after_render: async (detectMotion,nowPlaying) => {
+        
+
         console.log('poate vrea a mearga')
         let gyroscope = new Gyroscope({ frequency: 1 })
         let motionArray = []

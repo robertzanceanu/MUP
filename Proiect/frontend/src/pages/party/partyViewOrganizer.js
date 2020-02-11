@@ -2,10 +2,14 @@
 let PartyViewOrganizer = {
 
     render: async (userDetails, partyDetails, statistics, nowPlaying) => {
-        // const ws=new WebSocket.Server({noServer:true});
-        // ws.on('message',function incoming(message){
-        //     console.log('received: %s',message);
-        // });
+        
+        // const io=require("socket.io-client")
+        // const ioClient=io.connect("http://localhost:8000");
+        
+        // ioClient.on("new",(message)=>{
+        //     document.getElementById("nr_petrecareti").innerHTML=`${statistics.numberOfPlayers}`;
+        //     console.log(message);
+        // })
         return`
         <div class="wrapper">
             <div class="page-button">
